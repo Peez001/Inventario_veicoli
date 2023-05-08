@@ -35,8 +35,8 @@ public abstract class Veicolo {
 	
 	public String toString() {
 		return "Ha la targa "+this.targa+
-				", è un modello "+this.modello+
-				", della marca "+this.marca;
+				", è un modello"+this.modello+
+				", della marca"+this.marca;
 	}
 	
 }

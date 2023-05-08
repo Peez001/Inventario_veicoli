@@ -8,8 +8,6 @@ public class Main {
 		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
 		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid Sium", 13456);
 		Inventario inventario = new Inventario(listaVeicoli);
-		inventario.aggiungiVeicolo(moto1);
-		inventario.stampaLista();
 	}
 
 }

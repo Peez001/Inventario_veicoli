@@ -1,0 +1,7 @@
+package Package_inventario;
+
+import java.lang.Object.Veicolo;
+
+public class Moto extends Veicolo {
+
+}

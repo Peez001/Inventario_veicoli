@@ -1,0 +1,11 @@
+package Package_inventario;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid Sium", 13456);
+		System.out.println(moto1.toString());
+		
+	}
+
+}
