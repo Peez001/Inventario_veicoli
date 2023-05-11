@@ -3,6 +3,7 @@ package Package_inventario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -19,10 +20,14 @@ public class GUIVeicoli extends JFrame{
 	public static void main(String[] args) {
 		
 		ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-		Color coloreSfondo = new Color(179,204,255); //Imposto il colore dello sfondo
+		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo
+		
+		JLabel immagine = new JLabel();
+		immagine.setIcon(logo);
+		immagine.setHorizontalAlignment(JLabel.CENTER); 
+		immagine.setVerticalAlignment(JLabel.CENTER);
 		
 		JLabel etichetta = new JLabel("INVENTARIO VEICOLI"); //Creo l'etichetta
-		//etichetta.setIcon(logo); //Imposto l'immagine dell'etichetta
 		etichetta.setFont(new Font("Helvetica", Font.BOLD, 25)); //Imposto il font dell'etichetta
 		etichetta.setHorizontalAlignment(JLabel.CENTER); //Imposto la posizione orizzontale del testo rispetto all'immagine
 		etichetta.setVerticalAlignment(JLabel.CENTER); //Imposto la posizione verticale del testo rispetto all'immagine
@@ -34,15 +39,48 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
 		
 		JFrame frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
+		//frameIniziale.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
 		frameIniziale.setSize(500,500); //Imposto la dimensione iniziale del frame
 		frameIniziale.setVisible(true);	//Rendo il frame visibile
-		frameIniziale.add(bottoneInizio);
-		frameIniziale.add(etichetta);
 		frameIniziale.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
 		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
-		frameIniziale.setLayout(new GridLayout(3,3)); //Definisco il Layout manager del frame esterno
-		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame	
+		//frameIniziale.setLayout(null); //Definisco il Layout manager del frame esterno
+		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
+		
+		JPanel pannelloIniziale = new JPanel();
+		pannelloIniziale.setLayout(new BorderLayout());
+		
+		JPanel pannelloCentrale = new JPanel();
+		pannelloCentrale.setLayout(new GridLayout(3,3));
+		
+		frameIniziale.add(pannelloIniziale);
+		
+		JPanel p1 = new JPanel(); 
+		JPanel p2 = new JPanel(); 
+		JPanel p3 = new JPanel(); 
+		JPanel p4 = new JPanel(); 
+		
+		p1.setBackground(coloreSfondo);
+		p2.setBackground(coloreSfondo);
+		p3.setBackground(coloreSfondo);
+		p4.setBackground(coloreSfondo);
+		pannelloCentrale.setBackground(coloreSfondo);
+		
+		p1.setPreferredSize(new Dimension(200,200));
+		p2.setPreferredSize(new Dimension(200,200));
+		p3.setPreferredSize(new Dimension(200,200));
+		p4.setPreferredSize(new Dimension(200,200));
+		
+		pannelloIniziale.add(p1, BorderLayout.SOUTH);
+		pannelloIniziale.add(p2, BorderLayout.NORTH);
+		pannelloIniziale.add(p3, BorderLayout.EAST);
+		pannelloIniziale.add(p4, BorderLayout.WEST);
+		pannelloIniziale.add(pannelloCentrale);
+		
+		pannelloCentrale.add(immagine);
+		pannelloCentrale.add(etichetta);
+		pannelloCentrale.add(bottoneInizio);
+		
 		
 		//GUI per pannello successivo, quando il pulsante "Accedi" è stato premuto
 		JPanel pannelloInventario = new JPanel();
