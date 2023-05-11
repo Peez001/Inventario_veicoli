@@ -3,11 +3,14 @@ package Package_inventario;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -194,6 +197,10 @@ public class GUIVeicoli extends JFrame{
 		pannelloDatiVeicolo.add(Modello);
 		pannelloDatiVeicolo.add(testoModello);
 		
+		JPanel pannelloSpecifiche = new JPanel();
+		pannelloSpecifiche.setLayout(new GridLayout(1,2));
+		pannelloSpecifiche.setPreferredSize(new Dimension(80,80));
+		
 		JLabel numeroPorte = new JLabel("INSERISCI NUMERO PORTE");
 		numeroPorte.setFont(font);
 		JTextField  testoNumeroPorte = new JTextField();
@@ -206,21 +213,40 @@ public class GUIVeicoli extends JFrame{
 		portataMassima.setFont(font);
 		JTextField  testoPortataMassima= new JTextField();
 		
-			if(menuATendina.getSelectedIndex() == 0) {
-			pannelloDatiVeicolo.add(numeroPorte);
-			pannelloDatiVeicolo.add(testoNumeroPorte);
-			System.out.println("Ciao");}
-		if (menuATendina.getSelectedIndex() == 1) {
-			pannelloDatiVeicolo.add(Cilindrata);
-			pannelloDatiVeicolo.add(testoCilindrata);}
-		if (menuATendina.getSelectedIndex() == 2) {
-			pannelloDatiVeicolo.add(portataMassima);
-			pannelloDatiVeicolo.add(testoPortataMassima);
+		menuATendina.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {		
+				int numeroScelto = menuATendina.getSelectedIndex();
+				if(numeroScelto == 0) {
+					rimuovi(pannelloSpecifiche);
+					pannelloSpecifiche.add(numeroPorte);
+					pannelloSpecifiche.add(testoNumeroPorte);}
+				else if (numeroScelto == 1) {
+					rimuovi(pannelloSpecifiche);
+					pannelloSpecifiche.add(Cilindrata);
+					pannelloSpecifiche.add(testoCilindrata);}
+				else if (numeroScelto == 2) {
+					rimuovi(pannelloSpecifiche);
+					pannelloSpecifiche.add(portataMassima);
+					pannelloSpecifiche.add(testoPortataMassima);
+				}
 		}
+
+			private void rimuovi(JPanel pannelloSpecifiche) {
+				Component[] componentList = pannelloSpecifiche.getComponents();
+				for(Component c : componentList){
+					System.out.println(c.toString());
+					if(c instanceof JLabel || c instanceof JTextField){
+						pannelloSpecifiche.remove(c);
+					}
+				}
+			}});
 		
-		System.out.println(menuATendina.getSelectedIndex());
+		pannelloSpecifiche.revalidate();
+		pannelloSpecifiche.repaint();
 		
 		frameAggiungiVeicolo.add(pannelloDatiVeicolo, BorderLayout.CENTER);
+		frameAggiungiVeicolo.add(pannelloSpecifiche, BorderLayout.SOUTH);
 		
 		bottoneAggiungiVeicolo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -230,26 +256,13 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
-//	private void selezioneGrafica(JButton bottone) {
-//		bottone.addActionListener(new ActionListener() {
-//			private boolean isPressed = false;
-//			
-//			@Override
-//            public void actionPerformed(ActionEvent e) {
-//                isPressed = !isPressed;
-//                bottone.getModel().setPressed(isPressed);
-//                bottone.getModel().setArmed(isPressed);
-//            }
-//			
-//		});
-//	}
+	
 
 	public static void main(String[] args) {
 		
 		GUIVeicoli gui = new GUIVeicoli();
 		gui.frameIniziale.setVisible(true);
 	}
-	
 }
 
 
