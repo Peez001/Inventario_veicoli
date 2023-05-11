@@ -258,26 +258,31 @@ public class GUIVeicoli extends JFrame{
 
 	private void schermataFind() {
 		
+		// creo un frame per contenere l'esecuzione iniziale del comando Find		
 		JFrame pannelloTarga = new JFrame("Trova un veicolo");
 		pannelloTarga.setSize(350, 160);
 		pannelloTarga.getContentPane().setBackground(coloreSfondo);
 		pannelloTarga.setLayout(new GridLayout(3, 1)); //Definisco il Layout manager del frame esterno
 		pannelloTarga.setIconImage(logo.getImage()); //Imposto l'icona del frame
 		
-		// creo un area di testo per far comparire la richiesta di inserimento
+		// creo un area di testo per far comparire il messaggio di richiesta di inserimento
 		JTextField messagioRichiestaTarga = new JTextField("Inserisci targa:");
 		messagioRichiestaTarga.setFont(font);
 		messagioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
         
+		// creo un area di testo per far comparire l'are di inserimento
 		JTextField inserisciTarga = new JTextField();
 		inserisciTarga.setFont(font);
 		
+		// bottone per confermare l'inserimento
 		JButton bottoneConferma = new JButton("Ok");
 
+		// aggiungo gli elementi al pannelloTarga
 		pannelloTarga.add(messagioRichiestaTarga);
 		pannelloTarga.add(inserisciTarga);
 		pannelloTarga.add(bottoneConferma);
 		
+		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
 		
 	}
