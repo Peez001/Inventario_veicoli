@@ -14,6 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class GUIVeicoli extends JFrame{
 
@@ -23,6 +26,12 @@ public class GUIVeicoli extends JFrame{
 	private JPanel pannelloCards;	
 	private JPanel pannelloIniziale;
 	private JPanel pannelloInventario;
+	private JButton bottoneAggiungiVeicolo;
+	private JButton bottoneTrovaVeicolo;
+	private JButton bottoneStampaVeicoli;
+	
+	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
+	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
 	
 	public GUIVeicoli() {
 		
@@ -39,9 +48,6 @@ public class GUIVeicoli extends JFrame{
 	}
 
 	private void schermataIniziale() {
-		
-		ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
 				
 		CardLayout cardLayout = new CardLayout();
 		pannelloCards = new JPanel(cardLayout);// pannello per le prime due card sequenziali
@@ -119,17 +125,17 @@ public class GUIVeicoli extends JFrame{
 		pannelloInventario = new JPanel();
 		pannelloInventario.setLayout(new GridLayout());
 				
-		JButton bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
+		bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
 		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200,200));
 		bottoneAggiungiVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
 		bottoneAggiungiVeicolo.setFocusable(false);
 		
-		JButton bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
+		bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
 		bottoneTrovaVeicolo.setPreferredSize(new Dimension(200,200));
 		bottoneTrovaVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
 		bottoneTrovaVeicolo.setFocusable(false);
 		
-		JButton bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
+		bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
 		bottoneStampaVeicoli.setPreferredSize(new Dimension(200,200));
 		bottoneStampaVeicoli.setFont(new Font("Helvetica", Font.BOLD, 25));
 		bottoneStampaVeicoli.setFocusable(false);
@@ -145,9 +151,71 @@ public class GUIVeicoli extends JFrame{
 	}
 
 	private void schermataAddVeicolo() {
+		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
+		frameAggiungiVeicolo.setVisible(false);
+		frameAggiungiVeicolo.setSize(600,400); //Imposto la dimensione iniziale del frame
+		frameAggiungiVeicolo.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
+		//frameAggiungiVeicolo.setDefaultCloseOperation(); //Alla pressione della X rossa chiudo l'applicazione
+		frameAggiungiVeicolo.setLayout(new BorderLayout()); //Definisco il Layout manager del frame esterno
+		frameAggiungiVeicolo.setIconImage(logo.getImage()); //Imposto l'icona del frame
 
-		// vezzo aggiungi qui il tuo nuovo codice
+		JPanel pannelloDatiVeicolo = new JPanel(new GridLayout(6,2));
+		
+		JLabel sceltaVeicolo = new JLabel("SCEGLI VEICOLO");
+		sceltaVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
+		
+		String[] options = {"AUTOMOBILE", "MOTO", "CAMION"};
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(options);
+        JComboBox<String> comboBox = new JComboBox<>(model);
+        comboBox.setEditable(false);
+        comboBox.setMaximumRowCount(3);
+        comboBox.setSelectedIndex(-1);
+        comboBox.getEditor().setItem("");
+
+		JLabel Targa = new JLabel("INSERISCI TARGA");
+		Targa.setFont(new Font("Helvetica", Font.BOLD, 25));
+		JTextField testoTarga = new JTextField();		
+		
+		JLabel Marca = new JLabel("INSERISCI MARCA");
+		Marca.setFont(new Font("Helvetica", Font.BOLD, 25));
+		JTextField testoMarca = new JTextField();
+		
+		JLabel Modello = new JLabel("INSERISCI MODELLO");
+		Modello.setFont(new Font("Helvetica", Font.BOLD, 25));
+		JTextField testoModello = new JTextField();
+		
+		pannelloDatiVeicolo.add(sceltaVeicolo);
+		pannelloDatiVeicolo.add(comboBox);
+		pannelloDatiVeicolo.add(Targa);
+		pannelloDatiVeicolo.add(testoTarga);
+		pannelloDatiVeicolo.add(Marca);
+		pannelloDatiVeicolo.add(testoMarca);
+		pannelloDatiVeicolo.add(Modello);
+		pannelloDatiVeicolo.add(testoModello);
+		
+		frameAggiungiVeicolo.add(pannelloDatiVeicolo, BorderLayout.CENTER);
+		
+		bottoneAggiungiVeicolo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				frameAggiungiVeicolo.setVisible(true);
+			}
+		});
+		
 	}
+
+//	private void selezioneGrafica(JButton bottone) {
+//		bottone.addActionListener(new ActionListener() {
+//			private boolean isPressed = false;
+//			
+//			@Override
+//            public void actionPerformed(ActionEvent e) {
+//                isPressed = !isPressed;
+//                bottone.getModel().setPressed(isPressed);
+//                bottone.getModel().setArmed(isPressed);
+//            }
+//			
+//		});
+//	}
 
 	public static void main(String[] args) {
 		
