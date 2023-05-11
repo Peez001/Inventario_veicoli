@@ -52,6 +52,7 @@ public class GUIVeicoli extends JFrame{
 		schermataInventario();	
 		schermataAddVeicolo();
 		schermataFind();
+		schermataStamp();
 		
 	}
 
@@ -285,6 +286,33 @@ public class GUIVeicoli extends JFrame{
 		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
 		
+	}
+	
+	private void schermataStamp() {
+		
+		// creo un frame per contenere l'esecuzione iniziale del comando Stamp
+				JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
+				frameStamp.setVisible(false);
+				frameStamp.setSize(350, 700);
+				frameStamp.getContentPane().setBackground(coloreSfondo);
+				frameStamp.setLayout(new GridLayout(1, 1)); //Definisco il Layout manager del nuovo frame
+				frameStamp.setIconImage(logo.getImage()); //Imposto l'icona del frame
+				
+				//Creo un'area di testo per stampare l'elenco
+				JTextField listaVeicoli = new JTextField();
+				
+				// aggiungo l'elemento al frameStamp
+				frameStamp.add(listaVeicoli);
+				
+				// richiamo la funzione per abilitare e disabilare i bottoni
+				disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
+				
+				// LISTENERS				
+				bottoneStampaVeicoli.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						frameStamp.setVisible(true);
+					}
+				});
 	}
 
 	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
