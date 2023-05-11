@@ -20,8 +20,15 @@ public class GUIVeicoli extends JFrame{
 	public static void main(String[] args) {
 		
 		/*
-		 * SIUM
-		 * */
+		 *SIUM
+		 * *
+		 * 
+		 * 
+		 * SISISISISISISISISSIIIIIIII
+		 * 
+		 * 
+		 * 
+		 */
 		
 		ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
 		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo
