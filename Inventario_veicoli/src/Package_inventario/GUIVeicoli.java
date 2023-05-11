@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -47,6 +48,7 @@ public class GUIVeicoli extends JFrame{
 		schermataIniziale();	
 		schermataInventario();	
 		schermataAddVeicolo();
+		schermataFind();
 		
 	}
 
@@ -224,26 +226,60 @@ public class GUIVeicoli extends JFrame{
 		
 		frameAggiungiVeicolo.add(pannelloDatiVeicolo, BorderLayout.CENTER);
 		
-		bottoneAggiungiVeicolo.addActionListener(new ActionListener(){
+		disable_enabled_buttons(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
+		
+	}
+
+	private void schermataFind() {
+		
+		JFrame pannelloTarga = new JFrame("Trova un veicolo");
+		pannelloTarga.setSize(350, 160);
+		pannelloTarga.getContentPane().setBackground(coloreSfondo);
+		pannelloTarga.setLayout(new GridLayout(3, 1)); //Definisco il Layout manager del frame esterno
+		pannelloTarga.setIconImage(logo.getImage()); //Imposto l'icona del frame
+		
+		// creo un area di testo per far comparire la richiesta di inserimento
+		JTextField messagioRichiestaTarga = new JTextField("Inserisci targa:");
+		messagioRichiestaTarga.setFont(font);
+		messagioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+        
+		JTextField inserisciTarga = new JTextField();
+		inserisciTarga.setFont(font);
+		
+		JButton bottoneConferma = new JButton("Ok");
+
+		pannelloTarga.add(messagioRichiestaTarga);
+		pannelloTarga.add(inserisciTarga);
+		pannelloTarga.add(bottoneConferma);
+		
+		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
+		
+	}
+
+	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
+	private void disable_enabled_buttons(JFrame frameCorrente, JButton bottoneSelezionato) {
+		// Listener per la disabilitazione di pagina precedente
+		bottoneSelezionato.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				frameAggiungiVeicolo.setVisible(true);
+				frameCorrente.setVisible(true);
+				// disabilito i bottoni una volta cliccato il bottone precedente
 				bottoneAggiungiVeicolo.setEnabled(false);
 				bottoneStampaVeicoli.setEnabled(false);
 				bottoneTrovaVeicolo.setEnabled(false);
 				}
 		});
 		
-		// Listener per la disabilitazione di pagina precedente
-		frameAggiungiVeicolo.addWindowListener(new WindowAdapter() {
+		// listener della chiusura pagina per la riabilitazione
+		frameCorrente.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-		        // Riabilita la finestra precedente quando la finestra attuale viene chiusa
+		        // Riabilita i bottoni precedenti quando la finestra attuale viene chiusa
 				bottoneAggiungiVeicolo.setEnabled(true);
 				bottoneStampaVeicoli.setEnabled(true);
 				bottoneTrovaVeicolo.setEnabled(true);
 		        }
 		 });
-		
 	}
+	
 
 //	private void selezioneGrafica(JButton bottone) {
 //		bottone.addActionListener(new ActionListener() {
