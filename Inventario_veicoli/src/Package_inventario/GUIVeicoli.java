@@ -32,6 +32,7 @@ public class GUIVeicoli extends JFrame{
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
 	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
+	Font font = new Font("Helvetica", Font.BOLD, 25);
 	
 	public GUIVeicoli() {
 		
@@ -67,13 +68,13 @@ public class GUIVeicoli extends JFrame{
 		immagine.setVerticalAlignment(JLabel.CENTER);
 		
 		JLabel etichetta = new JLabel("INVENTARIO VEICOLI"); //Creo l'etichetta
-		etichetta.setFont(new Font("Helvetica", Font.BOLD, 25)); //Imposto il font dell'etichetta
+		etichetta.setFont(font); //Imposto il font dell'etichetta
 		etichetta.setHorizontalAlignment(JLabel.CENTER); //Imposto la posizione orizzontale del testo rispetto all'immagine
 		etichetta.setVerticalAlignment(JLabel.CENTER); //Imposto la posizione verticale del testo rispetto all'immagine
 		
 		JButton bottoneInizio = new JButton("ACCEDI ALL'INVENTARIO"); //Creo il bottone
 		bottoneInizio.setFocusable(false); //Tolgo la box attorno al testo del bottone
-		bottoneInizio.setFont(new Font("Helvetica", Font.BOLD, 25)); //Imposto il font del bottone
+		bottoneInizio.setFont(font); //Imposto il font del bottone
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT);
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
 		
@@ -127,17 +128,17 @@ public class GUIVeicoli extends JFrame{
 				
 		bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
 		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200,200));
-		bottoneAggiungiVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
+		bottoneAggiungiVeicolo.setFont(font);
 		bottoneAggiungiVeicolo.setFocusable(false);
 		
 		bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
 		bottoneTrovaVeicolo.setPreferredSize(new Dimension(200,200));
-		bottoneTrovaVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
+		bottoneTrovaVeicolo.setFont(font);
 		bottoneTrovaVeicolo.setFocusable(false);
 		
 		bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
 		bottoneStampaVeicoli.setPreferredSize(new Dimension(200,200));
-		bottoneStampaVeicoli.setFont(new Font("Helvetica", Font.BOLD, 25));
+		bottoneStampaVeicoli.setFont(font);
 		bottoneStampaVeicoli.setFocusable(false);
 		
 		pannelloInventario.setLayout(new GridLayout(3,1));
@@ -162,36 +163,62 @@ public class GUIVeicoli extends JFrame{
 		JPanel pannelloDatiVeicolo = new JPanel(new GridLayout(6,2));
 		
 		JLabel sceltaVeicolo = new JLabel("SCEGLI VEICOLO");
-		sceltaVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
+		sceltaVeicolo.setFont(font);
 		
 		String[] options = {"AUTOMOBILE", "MOTO", "CAMION"};
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(options);
-        JComboBox<String> comboBox = new JComboBox<>(model);
-        comboBox.setEditable(false);
-        comboBox.setMaximumRowCount(3);
-        comboBox.setSelectedIndex(-1);
-        comboBox.getEditor().setItem("");
+        JComboBox<String> menuATendina = new JComboBox<>(model);
+        menuATendina.setEditable(false);
+        menuATendina.setMaximumRowCount(3);
+        menuATendina.setSelectedIndex(-1);
+        menuATendina.getEditor().setItem("");
 
 		JLabel Targa = new JLabel("INSERISCI TARGA");
-		Targa.setFont(new Font("Helvetica", Font.BOLD, 25));
+		Targa.setFont(font);
 		JTextField testoTarga = new JTextField();		
 		
 		JLabel Marca = new JLabel("INSERISCI MARCA");
-		Marca.setFont(new Font("Helvetica", Font.BOLD, 25));
+		Marca.setFont(font);
 		JTextField testoMarca = new JTextField();
 		
 		JLabel Modello = new JLabel("INSERISCI MODELLO");
-		Modello.setFont(new Font("Helvetica", Font.BOLD, 25));
+		Modello.setFont(font);
 		JTextField testoModello = new JTextField();
 		
 		pannelloDatiVeicolo.add(sceltaVeicolo);
-		pannelloDatiVeicolo.add(comboBox);
+		pannelloDatiVeicolo.add(menuATendina);
 		pannelloDatiVeicolo.add(Targa);
 		pannelloDatiVeicolo.add(testoTarga);
 		pannelloDatiVeicolo.add(Marca);
 		pannelloDatiVeicolo.add(testoMarca);
 		pannelloDatiVeicolo.add(Modello);
 		pannelloDatiVeicolo.add(testoModello);
+		
+		JLabel numeroPorte = new JLabel("INSERISCI NUMERO PORTE");
+		numeroPorte.setFont(font);
+		JTextField  testoNumeroPorte = new JTextField();
+		
+		JLabel Cilindrata = new JLabel("INSERISCI CILINDRATA");
+		Cilindrata.setFont(font);
+		JTextField testoCilindrata = new JTextField();
+		
+		JLabel portataMassima = new JLabel("INSERISCI PORTATA MASSIMA");
+		portataMassima.setFont(font);
+		JTextField  testoPortataMassima= new JTextField();
+		
+			if(menuATendina.getSelectedIndex() == 0) {
+			pannelloDatiVeicolo.add(numeroPorte);
+			pannelloDatiVeicolo.add(testoNumeroPorte);
+			System.out.println("Ciao");}
+		if (menuATendina.getSelectedIndex() == 1) {
+			pannelloDatiVeicolo.add(Cilindrata);
+			pannelloDatiVeicolo.add(testoCilindrata);}
+		if (menuATendina.getSelectedIndex() == 2) {
+			pannelloDatiVeicolo.add(portataMassima);
+			pannelloDatiVeicolo.add(testoPortataMassima);
+		}
+		
+		System.out.println(menuATendina.getSelectedIndex());
 		
 		frameAggiungiVeicolo.add(pannelloDatiVeicolo, BorderLayout.CENTER);
 		
