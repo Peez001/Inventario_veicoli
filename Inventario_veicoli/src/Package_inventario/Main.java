@@ -11,8 +11,6 @@ public class Main {
 //		inventario.aggiungiVeicolo(moto1);
 //		inventario.stampaLista();
 		
-		GUIVeicoli gui = new GUIVeicoli();
-		gui.getFrameIniziale().setVisible(true);
 	}
 
 }

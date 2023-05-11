@@ -19,7 +19,6 @@ public class GUIVeicoli extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
-	private ImageIcon logo;
 	private JFrame frameIniziale;
 	private JPanel pannelloCards;	
 	private JPanel pannelloIniziale;
@@ -32,11 +31,29 @@ public class GUIVeicoli extends JFrame{
 	}
 	
 	private void init() {
-		logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
 		
+		schermataIniziale();	
+		schermataInventario();	
+		schermataAddVeicolo();
+		
+	}
+
+	private void schermataIniziale() {
+		
+		ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
+		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
+				
 		CardLayout cardLayout = new CardLayout();
-		pannelloCards = new JPanel(cardLayout);
+		pannelloCards = new JPanel(cardLayout);// pannello per le prime due card sequenziali
+		
+		frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
+		//frameIniziale.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
+		frameIniziale.setSize(800,800); //Imposto la dimensione iniziale del frame
+		//frameIniziale.setVisible(true);	//Rendo il frame visibile
+		frameIniziale.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
+		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
+		//frameIniziale.setLayout(cardLayout); //Definisco il Layout manager del frame esterno
+		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
 		
 		JLabel immagine = new JLabel();
 		immagine.setIcon(logo);
@@ -54,23 +71,11 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT);
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
 		
-		frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
-		//frameIniziale.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
-		frameIniziale.setSize(800,800); //Imposto la dimensione iniziale del frame
-		//frameIniziale.setVisible(true);	//Rendo il frame visibile
-		frameIniziale.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
-		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
-		//frameIniziale.setLayout(cardLayout); //Definisco il Layout manager del frame esterno
-		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
-		
 		pannelloIniziale = new JPanel();
 		pannelloIniziale.setLayout(new BorderLayout());
 		
 		JPanel pannelloCentrale = new JPanel();
 		pannelloCentrale.setLayout(new GridLayout(3,1));
-		
-		pannelloInventario = new JPanel();
-		pannelloInventario.setLayout(new BorderLayout());
 		
 		JPanel p1 = new JPanel(); 
 		JPanel p2 = new JPanel(); 
@@ -98,11 +103,22 @@ public class GUIVeicoli extends JFrame{
 		pannelloCentrale.add(etichetta);
 		pannelloCentrale.add(bottoneInizio);
 		
-		//GUI per pannello successivo, quando il pulsante "Accedi" è stato premuto
-	
-		JPanel pannelloBottoni = new JPanel();
-		pannelloInventario.add(pannelloBottoni, BorderLayout.NORTH);
+		pannelloCards.add(pannelloIniziale);
 		
+		// LISTENERS
+		bottoneInizio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.next(pannelloCards);
+			}
+		});
+		
+	}
+
+	private void schermataInventario() {
+		
+		pannelloInventario = new JPanel();
+		pannelloInventario.setLayout(new GridLayout());
+				
 		JButton bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
 		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200,200));
 		bottoneAggiungiVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
@@ -113,29 +129,31 @@ public class GUIVeicoli extends JFrame{
 		bottoneTrovaVeicolo.setFont(new Font("Helvetica", Font.BOLD, 25));
 		bottoneTrovaVeicolo.setFocusable(false);
 		
-		pannelloBottoni.setLayout(new GridLayout(1,2));
-		pannelloBottoni.add(bottoneTrovaVeicolo);
-		pannelloBottoni.add(bottoneAggiungiVeicolo);
+		JButton bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
+		bottoneStampaVeicoli.setPreferredSize(new Dimension(200,200));
+		bottoneStampaVeicoli.setFont(new Font("Helvetica", Font.BOLD, 25));
+		bottoneStampaVeicoli.setFocusable(false);
 		
-		JPanel pannelloListaVeicoli = new JPanel();
-		pannelloInventario.add(pannelloListaVeicoli, BorderLayout.CENTER);
+		pannelloInventario.setLayout(new GridLayout(3,1));
+		pannelloInventario.add(bottoneTrovaVeicolo);
+		pannelloInventario.add(bottoneAggiungiVeicolo);
+		pannelloInventario.add(bottoneStampaVeicoli);
 		
-		pannelloCards.add(pannelloIniziale);
 		pannelloCards.add(pannelloInventario);
-		
 		frameIniziale.add(pannelloCards);
 		
-		bottoneInizio.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				cardLayout.next(pannelloCards);
-			}
-		});
 	}
 
-	public JFrame getFrameIniziale() {
-		return frameIniziale;
+	private void schermataAddVeicolo() {
+
+		// vezzo aggiungi qui il tuo nuovo codice
 	}
 
+	public static void main(String[] args) {
+		
+		GUIVeicoli gui = new GUIVeicoli();
+		gui.frameIniziale.setVisible(true);
+	}
 	
 }
 
