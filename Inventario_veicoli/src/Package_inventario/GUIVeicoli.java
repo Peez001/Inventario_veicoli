@@ -1,11 +1,13 @@
 package Package_inventario;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,22 +18,25 @@ import javax.swing.JPanel;
 public class GUIVeicoli extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-
-	public static void main(String[] args) {
+	
+	private ImageIcon logo;
+	private JFrame frameIniziale;
+	private JPanel pannelloCards;	
+	private JPanel pannelloIniziale;
+	private JPanel pannelloInventario;
+	
+	public GUIVeicoli() {
 		
-		/*
-		 *SIUM
-		 * *
-		 * 
-		 * 
-		 * SISISISISISISISISSIIIIIIII
-		 * 
-		 * 
-		 * 
-		 */
+		init();
 		
-		ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo
+	}
+	
+	private void init() {
+		logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
+		Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
+		
+		CardLayout cardLayout = new CardLayout();
+		pannelloCards = new JPanel(cardLayout);
 		
 		JLabel immagine = new JLabel();
 		immagine.setIcon(logo);
@@ -49,22 +54,23 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT);
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
 		
-		JFrame frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
+		frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
 		//frameIniziale.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
-		frameIniziale.setSize(500,500); //Imposto la dimensione iniziale del frame
-		frameIniziale.setVisible(true);	//Rendo il frame visibile
+		frameIniziale.setSize(800,800); //Imposto la dimensione iniziale del frame
+		//frameIniziale.setVisible(true);	//Rendo il frame visibile
 		frameIniziale.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
 		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
-		//frameIniziale.setLayout(null); //Definisco il Layout manager del frame esterno
+		//frameIniziale.setLayout(cardLayout); //Definisco il Layout manager del frame esterno
 		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
 		
-		JPanel pannelloIniziale = new JPanel();
+		pannelloIniziale = new JPanel();
 		pannelloIniziale.setLayout(new BorderLayout());
 		
 		JPanel pannelloCentrale = new JPanel();
-		pannelloCentrale.setLayout(new GridLayout(3,3));
+		pannelloCentrale.setLayout(new GridLayout(3,1));
 		
-		frameIniziale.add(pannelloIniziale);
+		pannelloInventario = new JPanel();
+		pannelloInventario.setLayout(new BorderLayout());
 		
 		JPanel p1 = new JPanel(); 
 		JPanel p2 = new JPanel(); 
@@ -92,13 +98,8 @@ public class GUIVeicoli extends JFrame{
 		pannelloCentrale.add(etichetta);
 		pannelloCentrale.add(bottoneInizio);
 		
-		
 		//GUI per pannello successivo, quando il pulsante "Accedi" è stato premuto
-		JPanel pannelloInventario = new JPanel();
-		pannelloInventario.setVisible(false);
-		
-		bottoneInizio.addActionListener(e -> pannelloInventario.setVisible(true));
-		
+	
 		JPanel pannelloBottoni = new JPanel();
 		pannelloInventario.add(pannelloBottoni, BorderLayout.NORTH);
 		
@@ -117,13 +118,26 @@ public class GUIVeicoli extends JFrame{
 		pannelloBottoni.add(bottoneAggiungiVeicolo);
 		
 		JPanel pannelloListaVeicoli = new JPanel();
-		pannelloInventario.add(pannelloListaVeicoli, BorderLayout.CENTER); 
+		pannelloInventario.add(pannelloListaVeicoli, BorderLayout.CENTER);
 		
+		pannelloCards.add(pannelloIniziale);
+		pannelloCards.add(pannelloInventario);
 		
+		frameIniziale.add(pannelloCards);
 		
-		
-		}
+		bottoneInizio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.next(pannelloCards);
+			}
+		});
+	}
 
+	public JFrame getFrameIniziale() {
+		return frameIniziale;
+	}
+
+	
 }
+
 
 
