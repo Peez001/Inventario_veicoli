@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -159,7 +161,7 @@ public class GUIVeicoli extends JFrame{
 		frameAggiungiVeicolo.setVisible(false);
 		frameAggiungiVeicolo.setSize(600,400); //Imposto la dimensione iniziale del frame
 		frameAggiungiVeicolo.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
-		//frameAggiungiVeicolo.setDefaultCloseOperation(); //Alla pressione della X rossa chiudo l'applicazione
+		//frameAggiungiVeicolo.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
 		frameAggiungiVeicolo.setLayout(new BorderLayout()); //Definisco il Layout manager del frame esterno
 		frameAggiungiVeicolo.setIconImage(logo.getImage()); //Imposto l'icona del frame
 
@@ -251,8 +253,21 @@ public class GUIVeicoli extends JFrame{
 		bottoneAggiungiVeicolo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				frameAggiungiVeicolo.setVisible(true);
-			}
+				bottoneAggiungiVeicolo.setEnabled(false);
+				bottoneStampaVeicoli.setEnabled(false);
+				bottoneTrovaVeicolo.setEnabled(false);
+				}
 		});
+		
+		// Listener per la disabilitazione di pagina precedente
+		frameAggiungiVeicolo.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+		        // Riabilita la finestra precedente quando la finestra attuale viene chiusa
+				bottoneAggiungiVeicolo.setEnabled(true);
+				bottoneStampaVeicoli.setEnabled(true);
+				bottoneTrovaVeicolo.setEnabled(true);
+		        }
+		 });
 		
 	}
 
