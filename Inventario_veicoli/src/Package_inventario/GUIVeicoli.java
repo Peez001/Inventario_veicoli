@@ -7,12 +7,17 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -42,7 +47,7 @@ public class GUIVeicoli extends JFrame{
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
 	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
-	Font font = new Font("Helvetica", Font.BOLD, 25);
+	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
 	public GUIVeicoli(Inventario inventario) {
 		
@@ -73,7 +78,7 @@ public class GUIVeicoli extends JFrame{
 		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
 		//frameIniziale.setLayout(cardLayout); //Definisco il Layout manager del frame esterno
 		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
-		
+			
 		JLabel immagine = new JLabel();
 		immagine.setIcon(logo);
 		immagine.setHorizontalAlignment(JLabel.CENTER); 
@@ -87,15 +92,16 @@ public class GUIVeicoli extends JFrame{
 		JButton bottoneInizio = new JButton("ACCEDI ALL'INVENTARIO"); //Creo il bottone
 		bottoneInizio.setFocusable(false); //Tolgo la box attorno al testo del bottone
 		bottoneInizio.setFont(font); //Imposto il font del bottone
-		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT);
+		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT); //Allineamento bottone
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
 		
-		pannelloIniziale = new JPanel();
-		pannelloIniziale.setLayout(new BorderLayout());
+		pannelloIniziale = new JPanel(); //Creo pannello iniziale
+		pannelloIniziale.setLayout(new BorderLayout()); //Gestisco pannello iniziale con BorderLayout
 		
-		JPanel pannelloCentrale = new JPanel();
-		pannelloCentrale.setLayout(new GridLayout(3,1));
+		JPanel pannelloCentrale = new JPanel();	//Creo pannello centrale
+		pannelloCentrale.setLayout(new GridLayout(3,1)); //Gestisco pannello centrale con GridLayout
 		
+		//Creo 4 pannelli che faranno da riempispazi
 		JPanel p1 = new JPanel(); 
 		JPanel p2 = new JPanel(); 
 		JPanel p3 = new JPanel(); 
@@ -118,10 +124,12 @@ public class GUIVeicoli extends JFrame{
 		pannelloIniziale.add(p4, BorderLayout.WEST);
 		pannelloIniziale.add(pannelloCentrale);
 		
+		//Aggiungo immagine etichetta e bottoneInizio al pannello centrale
 		pannelloCentrale.add(immagine);
 		pannelloCentrale.add(etichetta);
 		pannelloCentrale.add(bottoneInizio);
 		
+		//Il pannello centrale é nel pannelloIniziale, che é nel pannelloCards, che a sua volta é nel frameIniziale.
 		pannelloCards.add(pannelloIniziale);
 		
 		// LISTENERS
@@ -164,19 +172,26 @@ public class GUIVeicoli extends JFrame{
 	}
 
 	private void schermataAddVeicolo() {
+		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
 		frameAggiungiVeicolo.setVisible(false);
 		frameAggiungiVeicolo.setSize(600,400); //Imposto la dimensione iniziale del frame
 		frameAggiungiVeicolo.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
-		//frameAggiungiVeicolo.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
 		frameAggiungiVeicolo.setLayout(new BorderLayout()); //Definisco il Layout manager del frame esterno
 		frameAggiungiVeicolo.setIconImage(logo.getImage()); //Imposto l'icona del frame
-
-		JPanel pannelloDatiVeicolo = new JPanel(new GridLayout(6,2));
 		
+		//Contenitore più esterno che conterrà i dati generali e specifici
+		JPanel contenitoreDati = new JPanel();
+		contenitoreDati.setLayout(new GridLayout(2,1));
+	
+		//Definisco il pannello che contiene i dati generali (targa, marca, modello) dei veicoli
+		JPanel pannelloDatiVeicolo = new JPanel(new GridLayout(4,2));
+		
+		//Label per scelta del veicolo
 		JLabel sceltaVeicolo = new JLabel("SCEGLI VEICOLO");
 		sceltaVeicolo.setFont(font);
 		
+		//Menù a tendina
 		String[] options = {"AUTOMOBILE", "MOTO", "CAMION"};
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(options);
         JComboBox<String> menuATendina = new JComboBox<>(model);
@@ -184,19 +199,27 @@ public class GUIVeicoli extends JFrame{
         menuATendina.setMaximumRowCount(3);
         menuATendina.setSelectedIndex(-1);
         menuATendina.getEditor().setItem("");
-
+        menuATendina.setFont(font);
+        
+        //Label e TextField per la targa
 		JLabel Targa = new JLabel("INSERISCI TARGA");
 		Targa.setFont(font);
 		JTextField testoTarga = new JTextField();		
+		testoTarga.setFont(font);
 		
+        //Label e TextField per la marca
 		JLabel Marca = new JLabel("INSERISCI MARCA");
 		Marca.setFont(font);
 		JTextField testoMarca = new JTextField();
+		testoMarca.setFont(font);
 		
+        //Label e TextField per il modello
 		JLabel Modello = new JLabel("INSERISCI MODELLO");
 		Modello.setFont(font);
 		JTextField testoModello = new JTextField();
+		testoModello.setFont(font);
 		
+		//Aggiungo tutto al pannello dati generali
 		pannelloDatiVeicolo.add(sceltaVeicolo);
 		pannelloDatiVeicolo.add(menuATendina);
 		pannelloDatiVeicolo.add(Targa);
@@ -206,57 +229,86 @@ public class GUIVeicoli extends JFrame{
 		pannelloDatiVeicolo.add(Modello);
 		pannelloDatiVeicolo.add(testoModello);
 		
+		//Creo il pannello che conterrà le specifiche per i differenti veicoli
+		//Automobile ---> Numero Porte
+		//Moto 		 ---> Cilindrata
+		//Camion	 ---> Portata Massima		
 		JPanel pannelloSpecifiche = new JPanel();
 		pannelloSpecifiche.setLayout(new GridLayout(1,2));
-		pannelloSpecifiche.setPreferredSize(new Dimension(80,80));
 		
+		//Label e TextField per il numero porte
 		JLabel numeroPorte = new JLabel("INSERISCI NUMERO PORTE");
 		numeroPorte.setFont(font);
 		JTextField  testoNumeroPorte = new JTextField();
-		
+		testoNumeroPorte.setFont(font);
+
+		//Label e TextField per la cilindrata
 		JLabel Cilindrata = new JLabel("INSERISCI CILINDRATA");
 		Cilindrata.setFont(font);
 		JTextField testoCilindrata = new JTextField();
-		
+		testoCilindrata.setFont(font);
+
+		//Label e TextField per la portata massima
 		JLabel portataMassima = new JLabel("INSERISCI PORTATA MASSIMA");
 		portataMassima.setFont(font);
 		JTextField  testoPortataMassima= new JTextField();
+		testoPortataMassima.setFont(font);
 		
-		menuATendina.addItemListener(new ItemListener() {
+		//Creo un contenitore sottostante che avrà dentro il pannello delle specifiche. 
+		//Lo divido in 4 righe così la dimensione della Label e TextField dei parametri specifici sarà sempre uguale agli altri dati.
+		JPanel contenitoreSpecifiche = new JPanel();
+		contenitoreSpecifiche.setLayout(new GridLayout(4,1));
+		
+		//Creo un listener per il menù a tendina. Si aggiorna quando ci si interagisce, e in base alla scelta aggiungo al pannelloSpecifiche.
+		//Quando scelgo un nuovo elemento del menù tolgo quello che c'era prima con il metodo rimuoviContenuto.
+		menuATendina.addActionListener(new ActionListener() {
 			@Override
-			public void itemStateChanged(ItemEvent e) {		
+			public void actionPerformed(ActionEvent e) {		
+				rimuoviContenuto(pannelloSpecifiche);
 				int numeroScelto = menuATendina.getSelectedIndex();
 				if(numeroScelto == 0) {
-					rimuovi(pannelloSpecifiche);
 					pannelloSpecifiche.add(numeroPorte);
-					pannelloSpecifiche.add(testoNumeroPorte);}
-				else if (numeroScelto == 1) {
-					rimuovi(pannelloSpecifiche);
+					pannelloSpecifiche.add(testoNumeroPorte);
+				}   else if (numeroScelto == 1) {
 					pannelloSpecifiche.add(Cilindrata);
-					pannelloSpecifiche.add(testoCilindrata);}
-				else if (numeroScelto == 2) {
-					rimuovi(pannelloSpecifiche);
+					pannelloSpecifiche.add(testoCilindrata);
+				}	else if (numeroScelto == 2) {
 					pannelloSpecifiche.add(portataMassima);
 					pannelloSpecifiche.add(testoPortataMassima);
 				}
-		}
+				pannelloSpecifiche.validate();
+				pannelloSpecifiche.repaint();
+			}
 
-			private void rimuovi(JPanel pannelloSpecifiche) {
-				Component[] componentList = pannelloSpecifiche.getComponents();
-				for(Component c : componentList){
-					System.out.println(c.toString());
-					if(c instanceof JLabel || c instanceof JTextField){
-						pannelloSpecifiche.remove(c);
-					}
+			private void rimuoviContenuto(JPanel pannello) {
+				Component[] listaComponenti = pannello.getComponents();
+				for(Component c : listaComponenti){
+				    if(c instanceof JLabel || c instanceof JTextField){
+				        pannello.remove(c);
+				    }
 				}
-			}});
+			}
+			});
 		
-		pannelloSpecifiche.revalidate();
-		pannelloSpecifiche.repaint();
+		//aggiungo il pannelloSpecifiche al contenitoreSpecifiche. Sarà nella posizione più in alto
+		contenitoreSpecifiche.add(pannelloSpecifiche);
+	
+		//aggiungo al contenitore esterno tutti i dati. Per le specifiche generali ho solo un pannello, gestito sempre allo stesso modo.
+		//Per le specifiche particolari devo aggiungere il contenitoreSpecifiche.
+		contenitoreDati.add(pannelloDatiVeicolo);
+		contenitoreDati.add(contenitoreSpecifiche);
 		
-		frameAggiungiVeicolo.add(pannelloDatiVeicolo, BorderLayout.CENTER);
-		frameAggiungiVeicolo.add(pannelloSpecifiche, BorderLayout.SOUTH);
+		//Creo il bottone che aggiunge il veicolo
+		JButton bottoneAggiungi = new JButton ("AGGIUNGI VEICOLO");
+		bottoneAggiungi.setFocusable(false); //Tolgo la box attorno al testo del bottone
+		bottoneAggiungi.setFont(font); //Imposto il font del bottone
+		bottoneAggiungi.setPreferredSize(new Dimension(100,100));
 		
+		//aggiungo tutto al frame, gestito con BorderLayout
+		frameAggiungiVeicolo.add(contenitoreDati, BorderLayout.CENTER);
+		frameAggiungiVeicolo.add(bottoneAggiungi, BorderLayout.SOUTH);
+	
+		//Disattivo i bottoni del frame sottostante
 		disable_enabled_buttons(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
 		
 	}
@@ -354,9 +406,6 @@ public class GUIVeicoli extends JFrame{
 		 });
 	}
 	
-
-	
-
 	public static void main(String[] args) {
 		
 		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
