@@ -13,14 +13,18 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -40,18 +44,18 @@ public class GUIVeicoli extends JFrame{
 	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 25);
 	
-	public GUIVeicoli() {
+	public GUIVeicoli(Inventario inventario) {
 		
-		init();
+		init(inventario);
 		
 	}
 	
-	private void init() {
+	private void init(Inventario inventario) {
 		
 		schermataIniziale();	
 		schermataInventario();	
 		schermataAddVeicolo();
-		schermataFind();
+		schermataFind(inventario);
 		schermataStamp();
 		
 	}
@@ -257,7 +261,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
-	private void schermataFind() {
+	private void schermataFind(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Find		
 		JFrame pannelloTarga = new JFrame("Trova un veicolo");
@@ -278,13 +282,24 @@ public class GUIVeicoli extends JFrame{
 		// bottone per confermare l'inserimento
 		JButton bottoneConferma = new JButton("Ok");
 
+
 		// aggiungo gli elementi al pannelloTarga
 		pannelloTarga.add(messagioRichiestaTarga);
 		pannelloTarga.add(inserisciTarga);
 		pannelloTarga.add(bottoneConferma);
 		
+		
+		
 		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
+		
+		// Listener per la ricerca al click del pulsante ok
+		bottoneConferma.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, inventario.trovaVeicolo(inserisciTarga.getText()), "Risposta", JOptionPane.YES_NO_CANCEL_OPTION);
+			}
+		});
+		
 		
 	}
 	
@@ -344,7 +359,12 @@ public class GUIVeicoli extends JFrame{
 
 	public static void main(String[] args) {
 		
-		GUIVeicoli gui = new GUIVeicoli();
+		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
+		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid Sium", 13456);
+		Inventario inventario = new Inventario(listaVeicoli);
+		inventario.aggiungiVeicolo(moto1);
+		Inventario inventario_prova = new Inventario(listaVeicoli);
+		GUIVeicoli gui = new GUIVeicoli(inventario_prova);
 		gui.frameIniziale.setVisible(true);
 	}
 }
