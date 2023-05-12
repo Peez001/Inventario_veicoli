@@ -329,7 +329,7 @@ public class GUIVeicoli extends JFrame{
 					}
 				});
 	}
-
+	
 	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
 	private void disable_enabled_buttons(JFrame frameCorrente, JButton bottoneSelezionato) {
 		// Listener per la disabilitazione di pagina precedente
@@ -364,8 +364,10 @@ public class GUIVeicoli extends JFrame{
 		Inventario inventario = new Inventario(listaVeicoli);
 		inventario.aggiungiVeicolo(moto1);
 		Inventario inventario_prova = new Inventario(listaVeicoli);
+		//inventario.inizio();
 		GUIVeicoli gui = new GUIVeicoli(inventario_prova);
 		gui.frameIniziale.setVisible(true);
+		
 	}
 }
 
