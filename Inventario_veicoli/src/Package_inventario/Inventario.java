@@ -16,7 +16,7 @@ public class Inventario {
 		this.listaVeicoli = listaVeicoli;
 	}
 
-	/*
+	// metodo che aggiunge in automatico all'inizio del programma le cose dal file all'arrayList
 	public void inizio() {
 		try {
 			FileReader reader = new FileReader("file.txt");
@@ -27,39 +27,52 @@ public class Inventario {
 				String modello = in.next();
 				String marca = in.next();
 				int x = Integer.parseInt(in.next());
-				Moto tempMoto = new Moto(marca, targa, modello, x);
-				aggiungiVeicolo(tempMoto);
+				String tipo = in.next();
+				if(tipo == "Moto"){
+					Moto tempMoto = new Moto(marca, targa, modello, x);
+					aggiungiVeicolo(tempMoto, false);
+				}
+				if(tipo == "Automobile"){
+					Automobile tempAuto = new Automobile(marca, targa, modello, x);
+					aggiungiVeicolo(tempAuto, false);
+				}
+				if(tipo == "Camion"){
+					Camion tempCamion = new Camion(marca, targa, modello, x);
+					aggiungiVeicolo(tempCamion, false);
+				}
 			}
 			reader.close();
 			in.close();
 		}catch (IOException e) {
-			System.out.println("Non esiste un inventario esistente");
+			System.out.println("Non esiste un inventario esistente"+e);
 		}
 	}
-	*/
 	
-	public void aggiungiVeicolo(Veicolo v) {
+	// lascio la scelta se salvarlo anche su file (true lo salva anche sul file)
+	public void aggiungiVeicolo(Veicolo v, boolean file) {
 		listaVeicoli.add(v);
 		
-		// Quando aggiungo un oggetto all'arrayList lo stampo anche sul file
-		try {
-			FileWriter writer = new FileWriter("file.txt",false);
-			PrintWriter out = new PrintWriter(writer);
-			if(v.getClass() == Moto.class) {
-				Moto m = (Moto)v;
-				out.println(m.getTarga()+" "+m.getModello()+" "+m.getMarca()+" "+m.getCilindrata());
+		if(file) {
+			// quando aggiungo un oggetto all'arrayList lo stampo anche sul file
+			try {
+				FileWriter writer = new FileWriter("file.txt",false);
+				PrintWriter out = new PrintWriter(writer);
+				if(v.getClass() == Moto.class) {
+					Moto m = (Moto)v;
+					out.println(m.getTarga()+" "+m.getModello()+" "+m.getMarca()+" "+m.getCilindrata()+" Moto");
+				}
+				if(v.getClass() == Automobile.class) {
+					Automobile a = (Automobile)v;
+					out.println(a.getTarga()+" "+a.getModello()+" "+a.getMarca()+" "+a.getNumero_porte()+" Automobile");
+				}
+				if(v.getClass() == Camion.class) {
+					Camion c = (Camion)v;
+					out.println(c.getTarga()+" "+c.getModello()+" "+c.getMarca()+" "+c.getPotata_carico()+" Camion");
+				}
+				out.close();
+			}catch(IOException e) {
+				System.out.println("Non esiste il file");
 			}
-			if(v.getClass() == Automobile.class) {
-				Automobile a = (Automobile)v;
-				out.println(a.getTarga()+" "+a.getModello()+" "+a.getMarca()+" "+a.getNumero_porte());
-			}
-			if(v.getClass() == Camion.class) {
-				Camion c = (Camion)v;
-				out.println(c.getTarga()+" "+c.getModello()+" "+c.getMarca()+" "+c.getPotata_carico());
-			}
-			out.close();
-		}catch(IOException e) {
-			System.out.println("Non esiste il file");
 		}
 	}
 	
