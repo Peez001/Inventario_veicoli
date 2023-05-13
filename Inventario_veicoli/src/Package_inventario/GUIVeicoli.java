@@ -103,28 +103,31 @@ public class GUIVeicoli extends JFrame{
 		
 		JPanel pannelloCentrale = new JPanel();	//Creo pannello centrale
 		pannelloCentrale.setLayout(new GridLayout(3,1)); //Gestisco pannello centrale con GridLayout
-		
-		//Creo 4 pannelli che faranno da riempispazi
-		JPanel p1 = new JPanel(); 
-		JPanel p2 = new JPanel(); 
-		JPanel p3 = new JPanel(); 
-		JPanel p4 = new JPanel(); 
-		
-		p1.setBackground(coloreSfondo);
-		p2.setBackground(coloreSfondo);
-		p3.setBackground(coloreSfondo);
-		p4.setBackground(coloreSfondo);
 		pannelloCentrale.setBackground(coloreSfondo);
+		pannelloCentrale.setBorder(new EmptyBorder(120, 120, 120, 120)); //Padding
 		
-		p1.setPreferredSize(new Dimension(200,200));
-		p2.setPreferredSize(new Dimension(200,200));
-		p3.setPreferredSize(new Dimension(200,200));
-		p4.setPreferredSize(new Dimension(200,200));
+		//Creo 4 pannelli che faranno da riempispazi (vecchia soluzione, lascio in caso ci servisse non lo stiamo a riscrivere)
+//		JPanel p1 = new JPanel(); 
+//		JPanel p2 = new JPanel(); 
+//		JPanel p3 = new JPanel(); 
+//		JPanel p4 = new JPanel(); 
+//		
+//		p1.setBackground(coloreSfondo);
+//		p2.setBackground(coloreSfondo);
+//		p3.setBackground(coloreSfondo);
+//		p4.setBackground(coloreSfondo);
 		
-		pannelloIniziale.add(p1, BorderLayout.SOUTH);
-		pannelloIniziale.add(p2, BorderLayout.NORTH);
-		pannelloIniziale.add(p3, BorderLayout.EAST);
-		pannelloIniziale.add(p4, BorderLayout.WEST);
+//		p1.setPreferredSize(new Dimension(200,200));
+//		p2.setPreferredSize(new Dimension(200,200));
+//		p3.setPreferredSize(new Dimension(200,200));
+//		p4.setPreferredSize(new Dimension(200,200));
+//		
+//		pannelloIniziale.add(p1, BorderLayout.SOUTH);
+//		pannelloIniziale.add(p2, BorderLayout.NORTH);
+//		pannelloIniziale.add(p3, BorderLayout.EAST);
+//		pannelloIniziale.add(p4, BorderLayout.WEST);
+		
+		
 		pannelloIniziale.add(pannelloCentrale);
 		
 		//Aggiungo immagine etichetta e bottoneInizio al pannello centrale
@@ -262,6 +265,8 @@ public class GUIVeicoli extends JFrame{
 		JPanel contenitoreSpecifiche = new JPanel();
 		contenitoreSpecifiche.setLayout(new GridLayout(4,1));
 		
+		JLabel immagineVeicolo = new JLabel();
+		
 		//Creo un listener per il menù a tendina. Si aggiorna quando ci si interagisce, e in base alla scelta aggiungo al pannelloSpecifiche.
 		//Quando scelgo un nuovo elemento del menù tolgo quello che c'era prima con il metodo rimuoviContenuto.
 		menuATendina.addActionListener(new ActionListener() {
@@ -337,13 +342,10 @@ public class GUIVeicoli extends JFrame{
 		// bottone per confermare l'inserimento
 		JButton bottoneConferma = new JButton("Ok");
 
-
 		// aggiungo gli elementi al pannelloTarga
 		pannelloTarga.add(messagioRichiestaTarga);
 		pannelloTarga.add(inserisciTarga);
 		pannelloTarga.add(bottoneConferma);
-		
-		
 		
 		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
@@ -354,8 +356,6 @@ public class GUIVeicoli extends JFrame{
 				JOptionPane.showMessageDialog(null, inventario.trovaVeicolo(inserisciTarga.getText()), "Risposta", JOptionPane.YES_NO_CANCEL_OPTION);
 			}
 		});
-		
-		
 	}
 	
 	private void schermataStamp(Inventario inventario) {
