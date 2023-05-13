@@ -19,6 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +27,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -61,7 +64,7 @@ public class GUIVeicoli extends JFrame{
 		schermataInventario();	
 		schermataAddVeicolo();
 		schermataFind(inventario);
-		schermataStamp();
+		schermataStamp(inventario);
 		
 	}
 
@@ -175,7 +178,7 @@ public class GUIVeicoli extends JFrame{
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
 		frameAggiungiVeicolo.setVisible(false);
-		frameAggiungiVeicolo.setSize(600,400); //Imposto la dimensione iniziale del frame
+		frameAggiungiVeicolo.setSize(1000,400); //Imposto la dimensione iniziale del frame
 		frameAggiungiVeicolo.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
 		frameAggiungiVeicolo.setLayout(new BorderLayout()); //Definisco il Layout manager del frame esterno
 		frameAggiungiVeicolo.setIconImage(logo.getImage()); //Imposto l'icona del frame
@@ -355,31 +358,38 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 	
-	private void schermataStamp() {
+	private void schermataStamp(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Stamp
-				JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
-				frameStamp.setVisible(false);
-				frameStamp.setSize(350, 700);
-				frameStamp.getContentPane().setBackground(coloreSfondo);
-				frameStamp.setLayout(new GridLayout(1, 1)); //Definisco il Layout manager del nuovo frame
-				frameStamp.setIconImage(logo.getImage()); //Imposto l'icona del frame
+		JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
+		
+		//Creo un'area di testo per stampare l'elenco
+		JTextArea listaVeicoli = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(listaVeicoli);
+		
+		frameStamp.setVisible(false);
+		frameStamp.setSize(700, 700);
+		frameStamp.getContentPane().setBackground(coloreSfondo);
+		frameStamp.setLayout(new GridLayout(1, 1)); //Definisco il Layout manager del nuovo frame
+		frameStamp.setIconImage(logo.getImage()); //Imposto l'icona del frame
+
+		List<String> myList = inventario.stampaLista();
+		
+		for (String e : myList) {
+			listaVeicoli.append(e+"\n");
+		}
+		// aggiungo l'elemento al frameStamp
+		frameStamp.add(listaVeicoli);
 				
-				//Creo un'area di testo per stampare l'elenco
-				JTextField listaVeicoli = new JTextField();
+		// richiamo la funzione per abilitare e disabilare i bottoni
+		disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
 				
-				// aggiungo l'elemento al frameStamp
-				frameStamp.add(listaVeicoli);
-				
-				// richiamo la funzione per abilitare e disabilare i bottoni
-				disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
-				
-				// LISTENERS				
-				bottoneStampaVeicoli.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent e) {
-						frameStamp.setVisible(true);
-					}
-				});
+		// LISTENERS				
+		bottoneStampaVeicoli.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				frameStamp.setVisible(true);
+			}
+		});
 	}
 	
 	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
@@ -409,9 +419,11 @@ public class GUIVeicoli extends JFrame{
 	public static void main(String[] args) {
 		
 		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
-		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid Sium", 13456);
+		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid_Sium", 13456);
+		Moto moto2 = new Moto("vecio", "XD666LO", "motorola", 6);
 		Inventario inventario = new Inventario(listaVeicoli);
 		inventario.aggiungiVeicolo(moto1);
+		inventario.aggiungiVeicolo(moto2);
 		Inventario inventario_prova = new Inventario(listaVeicoli);
 		//inventario.inizio();
 		GUIVeicoli gui = new GUIVeicoli(inventario_prova);
