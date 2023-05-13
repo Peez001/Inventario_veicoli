@@ -55,7 +55,7 @@ public class GUIVeicoli extends JFrame{
 		
 		schermataIniziale();	
 		schermataInventario();	
-		schermataAddVeicolo();
+		schermataAddVeicolo(inventario);
 		schermataFind(inventario);
 		schermataStamp(inventario);
 		
@@ -171,7 +171,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
-	private void schermataAddVeicolo() {
+	private void schermataAddVeicolo(Inventario inventario) {
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
 		frameAggiungiVeicolo.setVisible(false);
@@ -308,6 +308,43 @@ public class GUIVeicoli extends JFrame{
 		frameAggiungiVeicolo.add(contenitoreDati, BorderLayout.CENTER);
 		frameAggiungiVeicolo.add(bottoneAggiungi, BorderLayout.SOUTH);
 	
+		//Controllo se tutti i campi testo sono riempiti o meno (non funziona ancora)
+		boolean campiRiempiti = false;
+		while(frameAggiungiVeicolo.isShowing()) {
+			ArrayList<JTextField> listaCampiTesto = new ArrayList<>();
+			Component[] listaComponenti = contenitoreDati.getComponents();
+			
+			for(Component c : listaComponenti){
+				if(c instanceof JTextField){
+					listaCampiTesto.add((JTextField) c);
+				}	
+			}
+			
+			for(JTextField campo : listaCampiTesto) {
+			  if (campo.getText().trim().equals("")) {
+			    	      campiRiempiti = false;
+			    } else campiRiempiti = true;
+			}
+		}
+		bottoneAggiungi.setEnabled(campiRiempiti);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//Disattivo i bottoni del frame sottostante
 		disable_enabled_buttons(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
 		
