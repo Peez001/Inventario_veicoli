@@ -7,17 +7,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,24 +143,25 @@ public class GUIVeicoli extends JFrame{
 	private void schermataInventario() {
 		
 		pannelloInventario = new JPanel();
-		pannelloInventario.setLayout(new GridLayout());
-				
-		bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
-		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200,200));
-		bottoneAggiungiVeicolo.setFont(font);
-		bottoneAggiungiVeicolo.setFocusable(false);
-		
+		pannelloInventario.setLayout(new GridLayout(3,1,0,40));
+		pannelloInventario.setBackground(coloreSfondo);
+		pannelloInventario.setBorder(new EmptyBorder(80,80,80,80));
+
 		bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
 		bottoneTrovaVeicolo.setPreferredSize(new Dimension(200,200));
 		bottoneTrovaVeicolo.setFont(font);
 		bottoneTrovaVeicolo.setFocusable(false);
+		
+		bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
+		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200,200));
+		bottoneAggiungiVeicolo.setFont(font);
+		bottoneAggiungiVeicolo.setFocusable(false);
 		
 		bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
 		bottoneStampaVeicoli.setPreferredSize(new Dimension(200,200));
 		bottoneStampaVeicoli.setFont(font);
 		bottoneStampaVeicoli.setFocusable(false);
 		
-		pannelloInventario.setLayout(new GridLayout(3,1));
 		pannelloInventario.add(bottoneTrovaVeicolo);
 		pannelloInventario.add(bottoneAggiungiVeicolo);
 		pannelloInventario.add(bottoneStampaVeicoli);
@@ -265,8 +259,6 @@ public class GUIVeicoli extends JFrame{
 		JPanel contenitoreSpecifiche = new JPanel();
 		contenitoreSpecifiche.setLayout(new GridLayout(4,1));
 		
-		JLabel immagineVeicolo = new JLabel();
-		
 		//Creo un listener per il menù a tendina. Si aggiorna quando ci si interagisce, e in base alla scelta aggiungo al pannelloSpecifiche.
 		//Quando scelgo un nuovo elemento del menù tolgo quello che c'era prima con il metodo rimuoviContenuto.
 		menuATendina.addActionListener(new ActionListener() {
@@ -341,6 +333,7 @@ public class GUIVeicoli extends JFrame{
 		
 		// bottone per confermare l'inserimento
 		JButton bottoneConferma = new JButton("Ok");
+		bottoneConferma.setFocusable(false);
 
 		// aggiungo gli elementi al pannelloTarga
 		pannelloTarga.add(messagioRichiestaTarga);
