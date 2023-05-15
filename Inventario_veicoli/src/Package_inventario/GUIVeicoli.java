@@ -32,6 +32,7 @@ import javax.swing.DefaultComboBoxModel;
 public class GUIVeicoli extends JFrame{
 
 	private static final long serialVersionUID = 1L;
+	private static final String FILE = "file.txt";
 	
 	private JFrame frameIniziale;
 	private JPanel pannelloCards;	
@@ -400,9 +401,10 @@ public class GUIVeicoli extends JFrame{
 		frameStamp.setVisible(false);
 		frameStamp.setSize(700, 700);
 		frameStamp.getContentPane().setBackground(coloreSfondo);
-		frameStamp.setLayout(new GridLayout(1, 1)); //Definisco il Layout manager del nuovo frame
-		frameStamp.setIconImage(logo.getImage()); //Imposto l'icona del frame
-
+		frameStamp.setLayout(new GridLayout(1, 1)); // Definisco il Layout manager del nuovo frame
+		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
+		//listaVeicoli.setFont(font); // Non so se conviene, non si legge nulla dopo lol
+		
 		List<String> myList = inventario.stampaLista();
 		
 		for (String e : myList) {
@@ -452,8 +454,8 @@ public class GUIVeicoli extends JFrame{
 		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid_Sium", 13456);
 		Moto moto2 = new Moto("vecio", "XD666LO", "motorola", 6);
 		Inventario inventario = new Inventario(listaVeicoli);
-		inventario.aggiungiVeicolo(moto1, true);
-		inventario.aggiungiVeicolo(moto2, true);
+		inventario.aggiungiVeicolo(moto1);
+		inventario.aggiungiVeicolo(moto2);
 		Inventario inventario_prova = new Inventario(listaVeicoli);
 		//inventario.inizio();
 		GUIVeicoli gui = new GUIVeicoli(inventario_prova);

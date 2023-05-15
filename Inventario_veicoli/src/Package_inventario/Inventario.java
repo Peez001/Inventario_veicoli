@@ -10,16 +10,18 @@ import java.util.Scanner;
 
 public class Inventario {
 	
+	//private final static String FILE = "file.txt";
+	
 	ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
 	
 	public Inventario(ArrayList<Veicolo> listaVeicoli) {
 		this.listaVeicoli = listaVeicoli;
 	}
 
-	// metodo che aggiunge in automatico all'inizio del programma le cose dal file all'arrayList
-	public void inizio() {
+	// Aggiunge in automatico all'inizio del programma i Veicoli dal file di testo all'arrayList
+	public void inizio(String file) {
 		try {
-			FileReader reader = new FileReader("file.txt");
+			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
 			while(in.hasNextLine()) {
 				//System.out.println(in.nextLine());
@@ -30,52 +32,53 @@ public class Inventario {
 				String tipo = in.next();
 				if(tipo == "Moto"){
 					Moto tempMoto = new Moto(marca, targa, modello, x);
-					aggiungiVeicolo(tempMoto, false);
+					aggiungiVeicolo(tempMoto);
 				}
 				if(tipo == "Automobile"){
 					Automobile tempAuto = new Automobile(marca, targa, modello, x);
-					aggiungiVeicolo(tempAuto, false);
+					aggiungiVeicolo(tempAuto);
 				}
 				if(tipo == "Camion"){
 					Camion tempCamion = new Camion(marca, targa, modello, x);
-					aggiungiVeicolo(tempCamion, false);
+					aggiungiVeicolo(tempCamion);
 				}
 			}
 			reader.close();
 			in.close();
 		}catch (IOException e) {
 			System.out.println("Non esiste un inventario esistente"+e);
-		}
+		}	
 	}
 	
-	// lascio la scelta se salvarlo anche su file (true lo salva anche sul file)
-	public void aggiungiVeicolo(Veicolo v, boolean file) {
+	// Aggiunge il veicolo nell'arrayList
+	public void aggiungiVeicolo(Veicolo v) {
 		listaVeicoli.add(v);
-		
-		if(file) {
-			// quando aggiungo un oggetto all'arrayList lo stampo anche sul file
-			try {
-				FileWriter writer = new FileWriter("file.txt",false);
-				PrintWriter out = new PrintWriter(writer);
-				if(v.getClass() == Moto.class) {
-					Moto m = (Moto)v;
-					out.println(m.getTarga()+" "+m.getModello()+" "+m.getMarca()+" "+m.getCilindrata()+" Moto");
-				}
-				if(v.getClass() == Automobile.class) {
-					Automobile a = (Automobile)v;
-					out.println(a.getTarga()+" "+a.getModello()+" "+a.getMarca()+" "+a.getNumero_porte()+" Automobile");
-				}
-				if(v.getClass() == Camion.class) {
-					Camion c = (Camion)v;
-					out.println(c.getTarga()+" "+c.getModello()+" "+c.getMarca()+" "+c.getPotata_carico()+" Camion");
-				}
-				out.close();
-			}catch(IOException e) {
-				System.out.println("Non esiste il file");
+	}
+	
+	// Aggiunge il veicolo nel file di testo
+	public void aggiungiVeicoloFile(Veicolo v, String file) {
+		try {
+			FileWriter writer = new FileWriter(file,false); // da controllare
+			PrintWriter out = new PrintWriter(writer);
+			if(v.getClass() == Moto.class) {
+				Moto m = (Moto)v;
+				out.println(m.getTarga()+" "+m.getModello()+" "+m.getMarca()+" "+m.getCilindrata()+" Moto");
 			}
+			if(v.getClass() == Automobile.class) {
+				Automobile a = (Automobile)v;
+				out.println(a.getTarga()+" "+a.getModello()+" "+a.getMarca()+" "+a.getNumero_porte()+" Automobile");
+			}
+			if(v.getClass() == Camion.class) {
+				Camion c = (Camion)v;
+				out.println(c.getTarga()+" "+c.getModello()+" "+c.getMarca()+" "+c.getPotata_carico()+" Camion");
+			}
+			out.close();
+		}catch(IOException e) {
+			System.out.println("Non esiste il file");
 		}
 	}
 	
+	// Rimuove il veicolo dall'arrayList
 	public void rimuoviVeicolo(Veicolo v) {
 		if(listaVeicoli.contains(v))
 			listaVeicoli.remove(v);
@@ -83,6 +86,12 @@ public class Inventario {
 			System.out.println("Veicolo non presente nell'inventario!");
 	}
 	
+	// Rimuove il veicolo dal file di testo
+	public void rimuoviVeicoloFile(Veicolo v, String file) {
+		
+	}
+	
+	// Ritorna una Lista di String con tutti i metodi toString dei veicoli nell'inventario
 	public List<String> stampaLista() {
 		List<String> stringList = new ArrayList<String>();
 		for(Veicolo v : listaVeicoli)
