@@ -25,8 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -310,55 +310,76 @@ public class GUIVeicoli extends JFrame{
 		frameAggiungiVeicolo.add(contenitoreDati, BorderLayout.CENTER);
 		frameAggiungiVeicolo.add(bottoneAggiungi, BorderLayout.SOUTH);
 	
-		//Controllo se tutti i campi testo sono riempiti o meno (non funziona ancora)
-		bottoneAggiungi.addActionListener(new ActionListener() {
-			boolean campiRiempiti = false;
+		//Controllo se tutti i campi testo sono riempiti o meno 
+		bottoneAggiungi.setEnabled(false);
+		DocumentListener documentListener = new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateButtonState();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateButtonState();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateButtonState();
+			}
+
+			private void updateButtonState() {
+				boolean dati = (!testoTarga.getText().isEmpty() && !testoMarca.getText().isEmpty() && !testoModello.getText().isEmpty()); 
+				boolean specifiche = (menuATendina.getSelectedItem().toString().equals("AUTOMOBILE") && 
+						!testoNumeroPorte.getText().isEmpty()) || (menuATendina.getSelectedItem().toString().equals("MOTO") && 
+								!testoCilindrata.getText().isEmpty() || (menuATendina.getSelectedItem().toString().equals("CAMION") && 
+										!testoPortataMassima.getText().isEmpty()));
+				bottoneAggiungi.setEnabled(dati && specifiche);
+			}
+        };
+        
+        testoMarca.getDocument().addDocumentListener(documentListener);
+        testoModello.getDocument().addDocumentListener(documentListener);
+        testoTarga.getDocument().addDocumentListener(documentListener);
+        testoNumeroPorte.getDocument().addDocumentListener(documentListener);
+        testoCilindrata.getDocument().addDocumentListener(documentListener);
+        testoPortataMassima.getDocument().addDocumentListener(documentListener);
+        
+		//Aggiungo il veicolo all'inventario 		
+        bottoneAggiungi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Component[] listaDati = pannelloDatiVeicolo.getComponents();
-				Component[] listaSpecifiche = pannelloSpecifiche.getComponents();
-				ArrayList<JTextField> listaCampiTesto = new ArrayList<>();
-					
-				for(Component c : listaDati){
-					if(c instanceof JTextField){
-						listaCampiTesto.add((JTextField) c);
-					}	
-				}
 				
-				for(Component c : listaSpecifiche){
-					if(c instanceof JTextField){
-						listaCampiTesto.add((JTextField) c);
-					}	
-				}
-					
-				for(JTextField campo : listaCampiTesto) {
-					System.out.println(campo.getText());
-					if (campo.getText().trim().equals("")) {
-						  JOptionPane.showMessageDialog(null, "Devi riempire tutti i campi prima di aggiungere un veicolo!", "Attenzione", JOptionPane.YES_NO_CANCEL_OPTION);
-						  campiRiempiti = false;
-					} else campiRiempiti = true;
-				}
+				//controllo che la specifica sia un numero
+				String cifre = "[0-9]+";
+				boolean valid = (testoNumeroPorte.getText().matches(cifre) || 
+						testoCilindrata.getText().matches(cifre) || 
+						testoPortataMassima.getText().matches(cifre));
 				
-			}
-			
-		});
-			
+				//controllare che non sia troppo grande?
 				
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				//chiudere il frame resettando tutti i campi ?????
+				
+				if(valid) {
+					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
+						Automobile auto = new Automobile(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
+						inventario.aggiungiVeicolo(auto);
+						JOptionPane.showMessageDialog(null, auto.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+						
+					} else if(menuATendina.getSelectedItem().toString().equals("MOTO")) {
+						Moto moto = new Moto(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
+						inventario.aggiungiVeicolo(moto);
+						JOptionPane.showMessageDialog(null, moto.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Camion camion = new Camion(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
+						inventario.aggiungiVeicolo(camion);
+						JOptionPane.showMessageDialog(null, camion.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+        });
 		
 		//Disattivo i bottoni del frame sottostante
 		disable_enabled_buttons(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
