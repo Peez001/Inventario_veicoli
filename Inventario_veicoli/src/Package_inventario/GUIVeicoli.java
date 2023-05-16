@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class GUIVeicoli extends JFrame{
 		etichetta.setHorizontalAlignment(JLabel.CENTER); //Imposto la posizione orizzontale del testo rispetto all'immagine
 		etichetta.setVerticalAlignment(JLabel.CENTER); //Imposto la posizione verticale del testo rispetto all'immagine
 		
-		JButton bottoneInizio = new JButton("ACCEDI ALL'INVENTARIO"); //Creo il bottone
+		JButton bottoneInizio = new JButton("ACCEDI ALL'INVENTARIO"); //Creo il bottone inizio
 		bottoneInizio.setFocusable(false); //Tolgo la box attorno al testo del bottone
 		bottoneInizio.setFont(font); //Imposto il font del bottone
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT); //Allineamento bottone
@@ -310,27 +311,40 @@ public class GUIVeicoli extends JFrame{
 		frameAggiungiVeicolo.add(bottoneAggiungi, BorderLayout.SOUTH);
 	
 		//Controllo se tutti i campi testo sono riempiti o meno (non funziona ancora)
-		boolean campiRiempiti = false;
-		while(frameAggiungiVeicolo.isShowing()) {
-			ArrayList<JTextField> listaCampiTesto = new ArrayList<>();
-			Component[] listaComponenti = contenitoreDati.getComponents();
-			
-			for(Component c : listaComponenti){
-				if(c instanceof JTextField){
-					listaCampiTesto.add((JTextField) c);
-				}	
+		bottoneAggiungi.addActionListener(new ActionListener() {
+			boolean campiRiempiti = false;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Component[] listaDati = pannelloDatiVeicolo.getComponents();
+				Component[] listaSpecifiche = pannelloSpecifiche.getComponents();
+				ArrayList<JTextField> listaCampiTesto = new ArrayList<>();
+					
+				for(Component c : listaDati){
+					if(c instanceof JTextField){
+						listaCampiTesto.add((JTextField) c);
+					}	
+				}
+				
+				for(Component c : listaSpecifiche){
+					if(c instanceof JTextField){
+						listaCampiTesto.add((JTextField) c);
+					}	
+				}
+					
+				for(JTextField campo : listaCampiTesto) {
+					System.out.println(campo.getText());
+					if (campo.getText().trim().equals("")) {
+						  JOptionPane.showMessageDialog(null, "Devi riempire tutti i campi prima di aggiungere un veicolo!", "Attenzione", JOptionPane.YES_NO_CANCEL_OPTION);
+						  campiRiempiti = false;
+					} else campiRiempiti = true;
+				}
+				
 			}
 			
-			for(JTextField campo : listaCampiTesto) {
-			  if (campo.getText().trim().equals("")) {
-			    	      campiRiempiti = false;
-			    } else campiRiempiti = true;
-			}
-		}
-		bottoneAggiungi.setEnabled(campiRiempiti);
-		
-		
-		
+		});
+			
+				
+
 		
 		
 		
@@ -447,7 +461,7 @@ public class GUIVeicoli extends JFrame{
 		        }
 		 });
 	}
-	
+
 	public static void main(String[] args) {
 		
 		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
