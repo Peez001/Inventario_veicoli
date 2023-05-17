@@ -53,6 +53,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 	
+	//inizializzazione della GUI
 	private void init(Inventario inventario) {
 		
 		schermataIniziale();	
@@ -62,7 +63,8 @@ public class GUIVeicoli extends JFrame{
 		schermataStamp(inventario);
 		
 	}
-
+	
+	//schermata all'avvio del programma
 	private void schermataIniziale() {
 				
 		CardLayout cardLayout = new CardLayout();
@@ -101,28 +103,6 @@ public class GUIVeicoli extends JFrame{
 		pannelloCentrale.setBackground(coloreSfondo);
 		pannelloCentrale.setBorder(new EmptyBorder(120, 120, 120, 120)); //Padding
 		
-		//Creo 4 pannelli che faranno da riempispazi (vecchia soluzione, lascio in caso ci servisse non lo stiamo a riscrivere)
-//		JPanel p1 = new JPanel(); 
-//		JPanel p2 = new JPanel(); 
-//		JPanel p3 = new JPanel(); 
-//		JPanel p4 = new JPanel(); 
-//		
-//		p1.setBackground(coloreSfondo);
-//		p2.setBackground(coloreSfondo);
-//		p3.setBackground(coloreSfondo);
-//		p4.setBackground(coloreSfondo);
-		
-//		p1.setPreferredSize(new Dimension(200,200));
-//		p2.setPreferredSize(new Dimension(200,200));
-//		p3.setPreferredSize(new Dimension(200,200));
-//		p4.setPreferredSize(new Dimension(200,200));
-//		
-//		pannelloIniziale.add(p1, BorderLayout.SOUTH);
-//		pannelloIniziale.add(p2, BorderLayout.NORTH);
-//		pannelloIniziale.add(p3, BorderLayout.EAST);
-//		pannelloIniziale.add(p4, BorderLayout.WEST);
-		
-		
 		pannelloIniziale.add(pannelloCentrale);
 		
 		//Aggiungo immagine etichetta e bottoneInizio al pannello centrale
@@ -142,6 +122,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
+	//schermata selezione azioni
 	private void schermataInventario() {
 		
 		pannelloInventario = new JPanel();
@@ -173,6 +154,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
+	//schermata inserimento dati e aggiunta veicolo
 	private void schermataAddVeicolo(Inventario inventario) {
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
@@ -328,16 +310,21 @@ public class GUIVeicoli extends JFrame{
 				updateButtonState();
 			}
 
-			private void updateButtonState() {
-				boolean dati = (!testoTarga.getText().isEmpty() && !testoMarca.getText().isEmpty() && !testoModello.getText().isEmpty()); 
-				boolean specifiche = (menuATendina.getSelectedItem().toString().equals("AUTOMOBILE") && 
-						!testoNumeroPorte.getText().isEmpty()) || (menuATendina.getSelectedItem().toString().equals("MOTO") && 
-								!testoCilindrata.getText().isEmpty() || (menuATendina.getSelectedItem().toString().equals("CAMION") && 
-										!testoPortataMassima.getText().isEmpty()));
-				bottoneAggiungi.setEnabled(dati && specifiche);
-			}
+			private void updateButtonState() throws NullPointerException{
+				try {
+					boolean dati = (!testoTarga.getText().isEmpty() && !testoMarca.getText().isEmpty() && !testoModello.getText().isEmpty()); 
+					boolean specifiche = (menuATendina.getSelectedItem().toString().equals("AUTOMOBILE") && 
+							!testoNumeroPorte.getText().isEmpty()) || (menuATendina.getSelectedItem().toString().equals("MOTO") && 
+									!testoCilindrata.getText().isEmpty() || (menuATendina.getSelectedItem().toString().equals("CAMION") && 
+											!testoPortataMassima.getText().isEmpty()));
+					bottoneAggiungi.setEnabled(dati && specifiche);
+				} catch (NullPointerException e) {
+					JOptionPane.showMessageDialog(null, "Prima di inserire i dati, seleziona un tipo di veicolo!", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
+				}
         };
         
+        //aggiungo lo stesso documentListener a tutti i JTextField (possibile trovare un modo piu' carino per farlo :))
         testoMarca.getDocument().addDocumentListener(documentListener);
         testoModello.getDocument().addDocumentListener(documentListener);
         testoTarga.getDocument().addDocumentListener(documentListener);
@@ -351,34 +338,55 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				//controllo che la specifica sia un numero
-				String cifre = "[0-9]+";
+				String cifre = "\\d+";
 				boolean valid = (testoNumeroPorte.getText().matches(cifre) || 
 						testoCilindrata.getText().matches(cifre) || 
 						testoPortataMassima.getText().matches(cifre));
 				
 				//controllare che non sia troppo grande?
 				
-				//chiudere il frame resettando tutti i campi ?????
-				
+				//se ho inserito un numero, allora aggiungo il veicolo
 				if(valid) {
+					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
-						Automobile auto = new Automobile(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
-						inventario.aggiungiVeicolo(auto);
-						JOptionPane.showMessageDialog(null, auto.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
-						
+						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
+							 Automobile auto = new Automobile(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
+							 inventario.aggiungiVeicolo(auto);
+							 JOptionPane.showMessageDialog(null, auto.toString() + "\n Automobile aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+						 	}
 					} else if(menuATendina.getSelectedItem().toString().equals("MOTO")) {
-						Moto moto = new Moto(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
-						inventario.aggiungiVeicolo(moto);
-						JOptionPane.showMessageDialog(null, moto.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+						if(!testoCilindrata.getText().isEmpty()){
+							Moto moto = new Moto(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
+							inventario.aggiungiVeicolo(moto);
+							JOptionPane.showMessageDialog(null, moto.toString() + "\n Moto aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+							}
 					} else {
-						Camion camion = new Camion(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
-						inventario.aggiungiVeicolo(camion);
-						JOptionPane.showMessageDialog(null, camion.toString() + "\n Veicolo aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
-					}
-				} else {
+						if(!testoPortataMassima.getText().isEmpty()){
+							Camion camion = new Camion(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
+							inventario.aggiungiVeicolo(camion);
+							JOptionPane.showMessageDialog(null, camion.toString() + "\n Camion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					pulisciTextFields();
+					} else {
 					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
 					}
 				}
+
+			private void pulisciTextFields() {
+				ArrayList<Component> componenti = new ArrayList<>();
+				for(Component c : pannelloDatiVeicolo.getComponents()) {
+					componenti.add(c);
+				}
+				for(Component c : pannelloSpecifiche.getComponents()) {
+					componenti.add(c);
+				}
+				for(Component c : componenti) {
+					if(c instanceof JTextField) {
+						((JTextField) c).setText("");
+					}
+				}
+			}
         });
 		
 		//Disattivo i bottoni del frame sottostante
@@ -386,6 +394,7 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
+	//schermata per trovare un veicolo
 	private void schermataFind(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Find		
@@ -424,6 +433,7 @@ public class GUIVeicoli extends JFrame{
 		});
 	}
 	
+	//schermata di stampa dei veicoli
 	private void schermataStamp(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Stamp

@@ -33,9 +33,10 @@ public abstract class Veicolo {
 		this.modello = modello;
 	}
 	
+	//\u00E9 = Ã©. 
 	public String toString() {
 		return "Ha la targa "+this.targa+
-				", è un modello "+this.modello+
+				", \u00E9 un modello "+this.modello+
 				", della marca "+this.marca;
 	}
 	

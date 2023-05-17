@@ -103,7 +103,7 @@ public class Inventario {
 	public String trovaVeicolo(String targa) {
 		for(Veicolo v : listaVeicoli) {
 			if(v.getTarga().toLowerCase().equals(targa.toLowerCase()))
-				return "Il veicolo è presente.\n" + v.toString();
+				return "Il veicolo \u00E9 presente.\n" + v.toString();
 		}
 		return "Veicolo non presente";
 	}

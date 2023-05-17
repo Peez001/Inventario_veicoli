@@ -18,7 +18,7 @@ public class Camion extends Veicolo {
 	}
 	
 	public String toString() {
-		return "Questo veicolo è una camion con una "
+		return "Questo veicolo \u00E9 una camion con una "
 				+ "portata di carico di "+this.potata_carico+
 		" kg. "+super.toString();
 	}
