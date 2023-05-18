@@ -1,5 +1,7 @@
 package Package_inventario;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,14 +14,14 @@ public class Inventario {
 	
 	//private final static String FILE = "file.txt";
 	
-	ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
+	private ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
 	
 	public Inventario(ArrayList<Veicolo> listaVeicoli) {
 		this.listaVeicoli = listaVeicoli;
 	}
 
 	// Aggiunge in automatico all'inizio del programma i Veicoli dal file di testo all'arrayList
-	public void inizio(String file) {
+	public void inizio(File file) throws Exception{
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
@@ -42,12 +44,22 @@ public class Inventario {
 					Camion tempCamion = new Camion(marca, targa, modello, x);
 					aggiungiVeicolo(tempCamion);
 				}
+				else throw new IllegalArgumentException();
+				reader.close();
+				in.close();
 			}
-			reader.close();
-			in.close();
-		}catch (IOException e) {
-			System.out.println("Non esiste un inventario esistente"+e);
-		}	
+		}catch (FileNotFoundException e) {
+			System.out.println("File non esistente"+e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Finished!!");
+		}
 	}
 	
 	// Aggiunge il veicolo nell'arrayList
@@ -56,7 +68,7 @@ public class Inventario {
 	}
 	
 	// Aggiunge il veicolo nel file di testo
-	public void aggiungiVeicoloFile(Veicolo v, String file) {
+	public void aggiungiVeicoloFile(Veicolo v, File file) {
 		try {
 			FileWriter writer = new FileWriter(file,false); // da controllare
 			PrintWriter out = new PrintWriter(writer);
