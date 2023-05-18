@@ -46,6 +46,7 @@ public class GUIVeicoli extends JFrame{
 	private JButton bottoneAggiungiVeicolo;
 	private JButton bottoneTrovaVeicolo;
 	private JButton bottoneStampaVeicoli;
+	private JButton bottoneRimuoviVeicolo;
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file Ã© all'interno del progetto
 	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
@@ -58,6 +59,7 @@ public class GUIVeicoli extends JFrame{
 		schermataAddVeicolo(inventario, file);
 		schermataFind(inventario);
 		schermataStamp(inventario);
+		schermataRimuovi(inventario, file);
 		
 	}
 	
@@ -123,7 +125,7 @@ public class GUIVeicoli extends JFrame{
 	private void schermataInventario() {
 		
 		pannelloInventario = new JPanel();
-		pannelloInventario.setLayout(new GridLayout(3,1,0,40));
+		pannelloInventario.setLayout(new GridLayout(4,1,0,40));
 		pannelloInventario.setBackground(coloreSfondo);
 		pannelloInventario.setBorder(new EmptyBorder(80,80,80,80));
 
@@ -142,9 +144,15 @@ public class GUIVeicoli extends JFrame{
 		bottoneStampaVeicoli.setFont(font);
 		bottoneStampaVeicoli.setFocusable(false);
 		
+		bottoneRimuoviVeicolo = new JButton("RIMUOVI VEICOLO");
+		bottoneRimuoviVeicolo.setPreferredSize(new Dimension(200,200));
+		bottoneRimuoviVeicolo.setFont(font);
+		bottoneRimuoviVeicolo.setFocusable(false);
+		
 		pannelloInventario.add(bottoneTrovaVeicolo);
 		pannelloInventario.add(bottoneAggiungiVeicolo);
 		pannelloInventario.add(bottoneStampaVeicoli);
+		pannelloInventario.add(bottoneRimuoviVeicolo);
 		
 		pannelloCards.add(pannelloInventario);
 		frameIniziale.add(pannelloCards);
@@ -506,6 +514,54 @@ public class GUIVeicoli extends JFrame{
 				frameStamp.add(areaStampa);
 			}
 		});
+	}
+	
+	private void schermataRimuovi(Inventario inventario, File file) {
+		
+		// creo un frame per contenere l'esecuzione iniziale del comando Rimuovi
+		JFrame pannelloRimuovi = new JFrame("Rimuovi un veicolo");
+		pannelloRimuovi.setSize(350,160);
+		pannelloRimuovi.getContentPane().setBackground(coloreSfondo);
+		pannelloRimuovi.setLayout(new GridLayout(3,1));
+		pannelloRimuovi.setIconImage(logo.getImage());
+		
+		// creo un area di testo per far comparire il messaggio di richiesta di inserimento		
+		JTextField messagioRichiestaTarga = new JTextField("Inserisci targa:");
+		messagioRichiestaTarga.setFont(font);
+		messagioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+		
+		// creo un area di testo per far comparire l'are di inserimento
+		JTextField inserisciTarga = new JTextField();
+		inserisciTarga.setFont(font);
+				
+		// bottone per confermare l'inserimento
+		JButton bottoneRimuovi = new JButton("Rimuovi");
+		bottoneRimuovi.setFocusable(false);
+	
+		// aggiungo gli elementi al pannello Rimuovi
+		pannelloRimuovi.add(messagioRichiestaTarga);
+		pannelloRimuovi.add(inserisciTarga);
+		pannelloRimuovi.add(bottoneRimuovi);
+		
+		// richiamo la funzione per abilitare e disabilare i bottoni
+		disable_enabled_buttons(pannelloRimuovi, bottoneRimuoviVeicolo);
+		
+		// Listener per la ricerca al click del pulsante rimuovi
+		bottoneRimuovi.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(inventario.trovaVeicolo(inserisciTarga.getText()).equals("Veicolo non presente")) {
+					JOptionPane.showMessageDialog(null,"Non è stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					System.out.println("Non è stato possibile rimuovere il veicolo in quanto non esiste");
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Veicolo rimosso correttamente","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					System.out.println("Veicolo rimosso correttamente");
+					inventario.rimuoviVeicolo(null); // BIG PROBLEMA
+					inventario.rimuoviVeicoloFile(file);
+				}
+			}
+		});
+	
 	}
 	
 	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
