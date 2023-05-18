@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -49,7 +47,7 @@ public class GUIVeicoli extends JFrame{
 	private JButton bottoneRimuoviVeicolo;
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file Ã© all'interno del progetto
-	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
+	Color coloreSfondo = new Color(193, 223, 240); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
 	public GUIVeicoli(Inventario inventario, File file) {
@@ -93,6 +91,8 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setFont(font); //Imposto il font del bottone
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT); //Allineamento bottone
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
+		bottoneInizio.setBackground(new Color(53, 135, 164));
+		bottoneInizio.setForeground(new Color(250,250,250));
 		
 		pannelloIniziale = new JPanel(); //Creo pannello iniziale
 		pannelloIniziale.setLayout(new BorderLayout()); //Gestisco pannello iniziale con BorderLayout
@@ -418,7 +418,7 @@ public class GUIVeicoli extends JFrame{
 					}
 				}
 
-			private void pulisciTextFields() {
+			public void pulisciTextFields() {
 				ArrayList<Component> componenti = new ArrayList<>();
 				for(Component c : pannelloDatiVeicolo.getComponents()) {
 					componenti.add(c);
@@ -551,7 +551,7 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 //				if(inventario.trovaVeicolo(inserisciTarga.getText()).equals("Veicolo non presente")) {
 //					
-//					System.out.println("Non è stato possibile rimuovere il veicolo in quanto non esiste");
+//					System.out.println("Non ï¿½ stato possibile rimuovere il veicolo in quanto non esiste");
 //				}
 //				else {
 //					
@@ -565,7 +565,7 @@ public class GUIVeicoli extends JFrame{
 					JOptionPane.showMessageDialog(null,"Veicolo rimosso correttamente","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 				}
 				else
-					JOptionPane.showMessageDialog(null,"Non è stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					JOptionPane.showMessageDialog(null,"Non \u00E9 stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 			}
 		});
 	
