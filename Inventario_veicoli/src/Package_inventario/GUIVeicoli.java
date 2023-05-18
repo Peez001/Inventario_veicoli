@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+//import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+//import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +36,7 @@ public class GUIVeicoli extends JFrame{
 	private static final int CILINDRATA_MASSIMA = 8000;
 	private static final int NUMERO_PORTE_MASSIMO = 5;
 	private static final long serialVersionUID = 1L;
-	private static final String FILE = "file.txt";
+	//private static final String FILE = "file.txt";
 	
 	private JFrame frameIniziale;
 	private JPanel pannelloCards;	
@@ -475,8 +475,8 @@ public class GUIVeicoli extends JFrame{
 		JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
 		
 		//Creo un'area di testo per stampare l'elenco
-		JTextArea listaVeicoli = new JTextArea();
-		listaVeicoli.setFont(new Font("Helvetica", Font.PLAIN, 15));
+		JTextArea areaStampa = new JTextArea();
+		areaStampa.setFont(new Font("Helvetica", Font.PLAIN, 15));
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
@@ -495,13 +495,14 @@ public class GUIVeicoli extends JFrame{
 		bottoneStampaVeicoli.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
+				areaStampa.setText("");
 				List<String> myList = inventario.stampaLista();
 				
 				for (String s : myList) {
-					listaVeicoli.append(s+"\n");
+					areaStampa.append(s+"\n");
 				}
 				// aggiungo l'elemento al frameStamp
-				frameStamp.add(listaVeicoli);
+				frameStamp.add(areaStampa);
 			}
 		});
 	}
