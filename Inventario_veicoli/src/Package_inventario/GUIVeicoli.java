@@ -11,11 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -335,43 +335,48 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				//controllo che la specifica sia un numero
-				String cifre = "\\d+";
-				boolean valid = (testoNumeroPorte.getText().matches(cifre) || 
+				String cifre = "[0-9]+";
+				boolean isNumero = (testoNumeroPorte.getText().matches(cifre) || 
 						testoCilindrata.getText().matches(cifre) || 
 						testoPortataMassima.getText().matches(cifre));
 				
-			
+				
 				//controllo che non sia troppo grande (bruttissimo)
+				boolean numeroCorretto = false;
+				try {
+				
 				if(!testoNumeroPorte.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoNumeroPorte.getText());
 					if(numeroInserito <= NUMERO_PORTE_MASSIMO && numeroInserito > 0) {
-						valid = true;
+						numeroCorretto = true;
 					}else {
-						valid = false;
+						numeroCorretto = false;
 					}
 				}
 				
 				if(!testoCilindrata.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoCilindrata.getText());
 					if(numeroInserito <= CILINDRATA_MASSIMA && numeroInserito > 0) {
-						valid = true;
+						numeroCorretto = true;
 					}else {
-						valid = false;
+						numeroCorretto = false;
 					}
 				}
 				
 				if(!testoPortataMassima.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoPortataMassima.getText());
 					if(numeroInserito <= TONNELLATE_MASSIME && numeroInserito > 0) {
-						valid = true;
+						numeroCorretto = true;
 					}else {
-						valid = false;
+						numeroCorretto = false;
 					}
 				}
-				
+				} catch (NumberFormatException ex) {
+					//oops
+				}
 				
 				//se ho inserito un numero valido, allora aggiungo il veicolo
-				if(valid) {
+				if(isNumero && numeroCorretto) {
 					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
 						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
@@ -397,7 +402,7 @@ public class GUIVeicoli extends JFrame{
 						}
 					pulisciTextFields();
 					} else {
-					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero! Inoltre, deve essere valido e maggiore di zero!"
+					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero! Inoltre, deve essere maggiore di zero e rispettare questi parametri:"
 							+ " \n Numero porte massimo ---> 5 "
 							+ " \n Cilindrata massima 	---> 8000 cc"
 							+ " \n Portata massima 		---> 50 t"
@@ -493,9 +498,7 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
 				areaStampa.setText("");
-				
 				List<String> myList = inventario.stampaLista();
-				
 				for (String s : myList) {
 					areaStampa.append(s+"\n");
 				}

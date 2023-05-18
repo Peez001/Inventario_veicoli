@@ -48,11 +48,10 @@ public class Inventario {
 					Camion tempCamion = new Camion(marca, targa, modello, x);
 					aggiungiVeicolo(tempCamion);
 				}
-				else throw new IllegalArgumentException();
-				
+				else throw new IllegalArgumentException();	
 			}
-			reader.close();
 			in.close();
+			reader.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File non esistente"+e);
 		} catch (IOException e) {

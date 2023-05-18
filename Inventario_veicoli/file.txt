@@ -1,4 +1,9 @@
 23e wfw wefw 2 Automobile
 qwe dqw ada 5 Automobile
 EZ488AS Yaris Toyota 5 Automobile
+<<<<<<< HEAD
 EZ488AS dxdx xdxd 4 Automobile
+=======
+aaaA AAAAAAAAA AA 2 Automobile
+sa dw dq 11 Automobile
+>>>>>>> ff9ef3143d75f367aba8ef18cee4aa4bbe4e4f2f
