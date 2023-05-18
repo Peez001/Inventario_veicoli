@@ -495,6 +495,7 @@ public class GUIVeicoli extends JFrame{
 				areaStampa.setText("");
 				
 				List<String> myList = inventario.stampaLista();
+				System.out.println(myList);
 				
 				for (String s : myList) {
 					areaStampa.append(s+"\n");
