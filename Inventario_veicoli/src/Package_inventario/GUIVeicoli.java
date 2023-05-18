@@ -32,6 +32,9 @@ import javax.swing.DefaultComboBoxModel;
 
 public class GUIVeicoli extends JFrame{
 
+	private static final int TONNELLATE_MASSIME = 50;
+	private static final int CILINDRATA_MASSIMA = 8000;
+	private static final int NUMERO_PORTE_MASSIMO = 5;
 	private static final long serialVersionUID = 1L;
 	private static final String FILE = "file.txt";
 	
@@ -227,13 +230,13 @@ public class GUIVeicoli extends JFrame{
 		testoNumeroPorte.setFont(font);
 
 		//Label e TextField per la cilindrata
-		JLabel Cilindrata = new JLabel("INSERISCI CILINDRATA");
+		JLabel Cilindrata = new JLabel("INSERISCI CILINDRATA (CC)");
 		Cilindrata.setFont(font);
 		JTextField testoCilindrata = new JTextField();
 		testoCilindrata.setFont(font);
 
 		//Label e TextField per la portata massima
-		JLabel portataMassima = new JLabel("INSERISCI PORTATA MASSIMA");
+		JLabel portataMassima = new JLabel("INSERISCI PORTATA MASSIMA (t)");
 		portataMassima.setFont(font);
 		JTextField  testoPortataMassima= new JTextField();
 		testoPortataMassima.setFont(font);
@@ -343,9 +346,37 @@ public class GUIVeicoli extends JFrame{
 						testoCilindrata.getText().matches(cifre) || 
 						testoPortataMassima.getText().matches(cifre));
 				
-				//controllare che non sia troppo grande?
+			
+				//controllo che non sia troppo grande (bruttissimo)
+				if(!testoNumeroPorte.getText().isEmpty()) {
+					int numeroInserito = Integer.parseInt(testoNumeroPorte.getText());
+					if(numeroInserito < NUMERO_PORTE_MASSIMO && numeroInserito > 0) {
+						valid = true;
+					}else {
+						valid = false;
+					}
+				}
 				
-				//se ho inserito un numero, allora aggiungo il veicolo
+				if(!testoCilindrata.getText().isEmpty()) {
+					int numeroInserito = Integer.parseInt(testoCilindrata.getText());
+					if(numeroInserito < CILINDRATA_MASSIMA && numeroInserito > 0) {
+						valid = true;
+					}else {
+						valid = false;
+					}
+				}
+				
+				if(!testoPortataMassima.getText().isEmpty()) {
+					int numeroInserito = Integer.parseInt(testoPortataMassima.getText());
+					if(numeroInserito < TONNELLATE_MASSIME && numeroInserito > 0) {
+						valid = true;
+					}else {
+						valid = false;
+					}
+				}
+				
+				
+				//se ho inserito un numero valido, allora aggiungo il veicolo
 				if(valid) {
 					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
@@ -369,7 +400,11 @@ public class GUIVeicoli extends JFrame{
 						}
 					pulisciTextFields();
 					} else {
-					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero! Inoltre, deve essere valido e maggiore di zero!"
+							+ " \n Numero porte massimo ---> 5 "
+							+ " \n Cilindrata massima 	---> 8000 cc"
+							+ " \n Portata massima 		---> 50 t"
+							+ "", "Errore", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
