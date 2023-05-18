@@ -350,7 +350,7 @@ public class GUIVeicoli extends JFrame{
 				//controllo che non sia troppo grande (bruttissimo)
 				if(!testoNumeroPorte.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoNumeroPorte.getText());
-					if(numeroInserito < NUMERO_PORTE_MASSIMO && numeroInserito > 0) {
+					if(numeroInserito <= NUMERO_PORTE_MASSIMO && numeroInserito > 0) {
 						valid = true;
 					}else {
 						valid = false;
@@ -359,7 +359,7 @@ public class GUIVeicoli extends JFrame{
 				
 				if(!testoCilindrata.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoCilindrata.getText());
-					if(numeroInserito < CILINDRATA_MASSIMA && numeroInserito > 0) {
+					if(numeroInserito <= CILINDRATA_MASSIMA && numeroInserito > 0) {
 						valid = true;
 					}else {
 						valid = false;
@@ -368,7 +368,7 @@ public class GUIVeicoli extends JFrame{
 				
 				if(!testoPortataMassima.getText().isEmpty()) {
 					int numeroInserito = Integer.parseInt(testoPortataMassima.getText());
-					if(numeroInserito < TONNELLATE_MASSIME && numeroInserito > 0) {
+					if(numeroInserito <= TONNELLATE_MASSIME && numeroInserito > 0) {
 						valid = true;
 					}else {
 						valid = false;
@@ -381,19 +381,19 @@ public class GUIVeicoli extends JFrame{
 					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
 						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
-							 Automobile auto = new Automobile(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
+							 Automobile auto = new Automobile(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
 							 inventario.aggiungiVeicolo(auto);
 							 JOptionPane.showMessageDialog(null, auto.toString() + "\n Automobile aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 						 	}
 					} else if(menuATendina.getSelectedItem().toString().equals("MOTO")) {
 						if(!testoCilindrata.getText().isEmpty()){
-							Moto moto = new Moto(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
+							Moto moto = new Moto(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
 							inventario.aggiungiVeicolo(moto);
 							JOptionPane.showMessageDialog(null, moto.toString() + "\n Moto aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 					} else {
 						if(!testoPortataMassima.getText().isEmpty()){
-							Camion camion = new Camion(testoTarga.getText(), testoMarca.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
+							Camion camion = new Camion(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
 							inventario.aggiungiVeicolo(camion);
 							JOptionPane.showMessageDialog(null, camion.toString() + "\n Camion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
@@ -476,7 +476,7 @@ public class GUIVeicoli extends JFrame{
 		
 		//Creo un'area di testo per stampare l'elenco
 		JTextArea listaVeicoli = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(listaVeicoli);
+		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
 		frameStamp.setSize(700, 700);
@@ -485,13 +485,7 @@ public class GUIVeicoli extends JFrame{
 		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
 		//listaVeicoli.setFont(font); // Non so se conviene, non si legge nulla dopo lol
 		
-		List<String> myList = inventario.stampaLista();
 		
-		for (String e : myList) {
-			listaVeicoli.append(e+"\n");
-		}
-		// aggiungo l'elemento al frameStamp
-		frameStamp.add(listaVeicoli);
 				
 		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
@@ -500,6 +494,13 @@ public class GUIVeicoli extends JFrame{
 		bottoneStampaVeicoli.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
+				List<String> myList = inventario.stampaLista();
+				
+				for (String s : myList) {
+					listaVeicoli.append(s+"\n");
+				}
+				// aggiungo l'elemento al frameStamp
+				frameStamp.add(listaVeicoli);
 			}
 		});
 	}
@@ -531,14 +532,14 @@ public class GUIVeicoli extends JFrame{
 	public static void main(String[] args) {
 		
 		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
-		Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid_Sium", 13456);
-		Moto moto2 = new Moto("vecio", "XD666LO", "motorola", 6);
+		//Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid_Sium", 13456);
+		//Moto moto2 = new Moto("vecio", "XD666LO", "motorola", 6);
 		Inventario inventario = new Inventario(listaVeicoli);
-		inventario.aggiungiVeicolo(moto1);
-		inventario.aggiungiVeicolo(moto2);
-		Inventario inventario_prova = new Inventario(listaVeicoli);
+		//inventario.aggiungiVeicolo(moto1);
+		//inventario.aggiungiVeicolo(moto2);
+		//Inventario inventario_prova = new Inventario(listaVeicoli);
 		//inventario.inizio();
-		GUIVeicoli gui = new GUIVeicoli(inventario_prova);
+		GUIVeicoli gui = new GUIVeicoli(inventario);
 		gui.frameIniziale.setVisible(true);
 		
 	}
