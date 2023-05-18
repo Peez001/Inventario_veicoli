@@ -29,30 +29,32 @@ public class Inventario {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine() && !(in.nextLine().length() == 0)) {
-				//System.out.println(in.nextLine());
-				String targa = in.next();
-				String modello = in.next();
-				String marca = in.next();
-				int x = Integer.parseInt(in.next());
-				String tipo = in.next();
-				if(tipo.equals("Moto")){
-					Moto tempMoto = new Moto(marca, targa, modello, x);
-					aggiungiVeicolo(tempMoto);
-				}
-				else if(tipo.equals("Automobile")){
-					Automobile tempAuto = new Automobile(marca, targa, modello, x);
-					aggiungiVeicolo(tempAuto);
-				}
-				else if(tipo.equals("Camion")){
-					Camion tempCamion = new Camion(marca, targa, modello, x);
-					aggiungiVeicolo(tempCamion);
-				}
-				else throw new IllegalArgumentException();
+				while(in.hasNextLine() && !(in.nextLine().length() == 0)) {
+					//System.out.println(in.nextLine());
+					String targa = in.next();
+					String modello = in.next();
+					String marca = in.next();
+					int x = Integer.parseInt(in.next());
+					String tipo = in.next();
+					if(tipo.equals("Moto")){
+						Moto tempMoto = new Moto(marca, targa, modello, x);
+						aggiungiVeicolo(tempMoto);
+					}
+					else if(tipo.equals("Automobile")){
+						Automobile tempAuto = new Automobile(marca, targa, modello, x);
+						aggiungiVeicolo(tempAuto);
+					}
+					else if(tipo.equals("Camion")){
+						Camion tempCamion = new Camion(marca, targa, modello, x);
+						aggiungiVeicolo(tempCamion);
+					}
+					else throw new IllegalArgumentException();
+					
+					}
+				in.close();
+				reader.close();
 				
-			}
-			reader.close();
-			in.close();
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("File non esistente"+e);
 		} catch (IOException e) {
