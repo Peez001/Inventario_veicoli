@@ -11,8 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+<<<<<<< HEAD
+//import java.awt.event.WindowListener;
+=======
 import java.awt.event.WindowListener;
 import java.io.File;
+>>>>>>> d724fcfc3589eb55f6ce19d4f57776acecd23c85
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+//import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -493,7 +497,10 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
 				areaStampa.setText("");
+<<<<<<< HEAD
+=======
 				
+>>>>>>> d724fcfc3589eb55f6ce19d4f57776acecd23c85
 				List<String> myList = inventario.stampaLista();
 				System.out.println(myList);
 				
