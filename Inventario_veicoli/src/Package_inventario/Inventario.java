@@ -29,7 +29,7 @@ public class Inventario {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine() && !(in.nextLine().length() == 0)) {
+			while(in.hasNextLine()) {
 				//System.out.println(in.nextLine());
 				String targa = in.next();
 				String modello = in.next();
@@ -62,7 +62,7 @@ public class Inventario {
 			// TODO Auto-generated catch block
 			System.out.println("Why dont you funzioni");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}
 		
 		finally {
