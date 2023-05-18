@@ -472,8 +472,8 @@ public class GUIVeicoli extends JFrame{
 		JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
 		
 		//Creo un'area di testo per stampare l'elenco
-		JTextArea listaVeicoli = new JTextArea();
-		listaVeicoli.setFont(new Font("Helvetica", Font.PLAIN, 15));
+		JTextArea areaStampa = new JTextArea();
+		areaStampa.setFont(new Font("Helvetica", Font.PLAIN, 15));
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
@@ -492,13 +492,15 @@ public class GUIVeicoli extends JFrame{
 		bottoneStampaVeicoli.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
+				areaStampa.setText("");
+				
 				List<String> myList = inventario.stampaLista();
 				
 				for (String s : myList) {
-					listaVeicoli.append(s+"\n");
+					areaStampa.append(s+"\n");
 				}
 				// aggiungo l'elemento al frameStamp
-				frameStamp.add(listaVeicoli);
+				frameStamp.add(areaStampa);
 			}
 		});
 	}

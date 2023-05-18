@@ -29,7 +29,7 @@ public class Inventario {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine()) {
+			while(in.hasNextLine() && !(in.nextLine().length() == 0)) {
 				//System.out.println(in.nextLine());
 				String targa = in.next();
 				String modello = in.next();
@@ -57,7 +57,7 @@ public class Inventario {
 			System.out.println("File non esistente"+e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();	
+			System.out.println(e.getMessage());	
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Why dont you funzioni");
@@ -66,7 +66,7 @@ public class Inventario {
 		}
 		
 		finally {
-			System.out.println("Finished!!");
+			System.out.println("Inizializzazione Terminata...");
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class Inventario {
 	// Aggiunge il veicolo nel file di testo
 	public void aggiungiVeicoloFile(Veicolo v, File file) {
 		try {
-			FileWriter writer = new FileWriter(file,false); // da controllare
+			FileWriter writer = new FileWriter(file,true); // da controllare
 			PrintWriter out = new PrintWriter(writer);
 			if(v.getClass() == Moto.class) {
 				Moto m = (Moto)v;
