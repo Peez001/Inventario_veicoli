@@ -86,11 +86,11 @@ public class Inventario {
 				Moto m = (Moto)v;
 				out.println(m.getTarga()+" "+m.getModello()+" "+m.getMarca()+" "+m.getCilindrata()+" Moto");
 			}
-			if(v.getClass() == Automobile.class) {
+			else if(v.getClass() == Automobile.class) {
 				Automobile a = (Automobile)v;
 				out.println(a.getTarga()+" "+a.getModello()+" "+a.getMarca()+" "+a.getNumero_porte()+" Automobile");
 			}
-			if(v.getClass() == Camion.class) {
+			else if(v.getClass() == Camion.class) {
 				Camion c = (Camion)v;
 				out.println(c.getTarga()+" "+c.getModello()+" "+c.getMarca()+" "+c.getPotata_carico()+" Camion");
 			}
@@ -109,7 +109,25 @@ public class Inventario {
 	}
 	
 	// Rimuove il veicolo dal file di testo
-	public void rimuoviVeicoloFile(Veicolo v, String file) {
+	public void rimuoviVeicoloFile(File file) {
+		
+		try {
+			PrintWriter out = new PrintWriter(file);
+			out.println("");
+			out.close();
+		} catch(IOException e) {
+			System.out.println("Non esiste il file");
+		}
+		
+		try {
+			FileWriter writer = new FileWriter(file,true); // da controllare
+			PrintWriter out = new PrintWriter(writer);
+			for (Veicolo v : listaVeicoli)
+				aggiungiVeicoloFile(v, file);
+			out.close();
+		} catch(IOException e) {
+			System.out.println("Non esiste il file");
+		}
 		
 	}
 	
