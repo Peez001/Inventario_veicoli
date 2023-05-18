@@ -549,16 +549,23 @@ public class GUIVeicoli extends JFrame{
 		// Listener per la ricerca al click del pulsante rimuovi
 		bottoneRimuovi.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if(inventario.trovaVeicolo(inserisciTarga.getText()).equals("Veicolo non presente")) {
-					JOptionPane.showMessageDialog(null,"Non è stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
-					System.out.println("Non è stato possibile rimuovere il veicolo in quanto non esiste");
-				}
-				else {
-					JOptionPane.showMessageDialog(null,"Veicolo rimosso correttamente","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
-					System.out.println("Veicolo rimosso correttamente");
-					inventario.rimuoviVeicolo(null); // BIG PROBLEMA
+//				if(inventario.trovaVeicolo(inserisciTarga.getText()).equals("Veicolo non presente")) {
+//					
+//					System.out.println("Non è stato possibile rimuovere il veicolo in quanto non esiste");
+//				}
+//				else {
+//					
+//					System.out.println("Veicolo rimosso correttamente");
+//					inventario.rimuoviVeicolo(inserisciTarga.getText()); // BIG PROBLEMA
+//					inventario.rimuoviVeicoloFile(file);
+//				}
+				
+				if(inventario.rimuoviVeicolo(inserisciTarga.getText())) {
 					inventario.rimuoviVeicoloFile(file);
+					JOptionPane.showMessageDialog(null,"Veicolo rimosso correttamente","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 				}
+				else
+					JOptionPane.showMessageDialog(null,"Non è stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 			}
 		});
 	
@@ -574,6 +581,7 @@ public class GUIVeicoli extends JFrame{
 				bottoneAggiungiVeicolo.setEnabled(false);
 				bottoneStampaVeicoli.setEnabled(false);
 				bottoneTrovaVeicolo.setEnabled(false);
+				bottoneRimuoviVeicolo.setEnabled(false);
 				}
 		});
 		
@@ -584,6 +592,7 @@ public class GUIVeicoli extends JFrame{
 				bottoneAggiungiVeicolo.setEnabled(true);
 				bottoneStampaVeicoli.setEnabled(true);
 				bottoneTrovaVeicolo.setEnabled(true);
+				bottoneRimuoviVeicolo.setEnabled(true);
 		        }
 		 });
 	}

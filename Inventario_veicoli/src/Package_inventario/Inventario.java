@@ -98,13 +98,16 @@ public class Inventario {
 	}
 	
 	// Rimuove il veicolo dall'arrayList
-	public void rimuoviVeicolo(Veicolo v) {
-		if(listaVeicoli.contains(v))
-			listaVeicoli.remove(v);
-		else
-			System.out.println("Veicolo non presente nell'inventario!");
+	public boolean rimuoviVeicolo(String targa) {
+		for(Veicolo v : listaVeicoli) {
+			if(v.getTarga().toLowerCase().equals(targa.toLowerCase())) {
+				listaVeicoli.remove(v);
+				return true;
+			}	
+		}
+		return false;
 	}
-	
+
 	// Rimuove il veicolo dal file di testo
 	public void rimuoviVeicoloFile(File file) {
 		
