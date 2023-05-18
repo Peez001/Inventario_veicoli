@@ -476,6 +476,7 @@ public class GUIVeicoli extends JFrame{
 		
 		//Creo un'area di testo per stampare l'elenco
 		JTextArea listaVeicoli = new JTextArea();
+		listaVeicoli.setFont(new Font("Helvetica", Font.PLAIN, 15));
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
