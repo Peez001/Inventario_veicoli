@@ -19,9 +19,13 @@ public class Inventario {
 	public Inventario(ArrayList<Veicolo> listaVeicoli) {
 		this.listaVeicoli = listaVeicoli;
 	}
+	
+	public Inventario() {
+		this.listaVeicoli = new ArrayList<Veicolo>();
+	}
 
 	// Aggiunge in automatico all'inizio del programma i Veicoli dal file di testo all'arrayList
-	public void inizio(File file) throws Exception{
+	public void inizio(File file) {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
@@ -32,31 +36,35 @@ public class Inventario {
 				String marca = in.next();
 				int x = Integer.parseInt(in.next());
 				String tipo = in.next();
-				if(tipo == "Moto"){
+				if(tipo.equals("Moto")){
 					Moto tempMoto = new Moto(marca, targa, modello, x);
 					aggiungiVeicolo(tempMoto);
 				}
-				if(tipo == "Automobile"){
+				else if(tipo.equals("Automobile")){
 					Automobile tempAuto = new Automobile(marca, targa, modello, x);
 					aggiungiVeicolo(tempAuto);
 				}
-				if(tipo == "Camion"){
+				else if(tipo.equals("Camion")){
 					Camion tempCamion = new Camion(marca, targa, modello, x);
 					aggiungiVeicolo(tempCamion);
 				}
 				else throw new IllegalArgumentException();
-				reader.close();
-				in.close();
+				
 			}
-		}catch (FileNotFoundException e) {
+			reader.close();
+			in.close();
+		} catch (FileNotFoundException e) {
 			System.out.println("File non esistente"+e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();	
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Why dont you funzioni");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+		
 		finally {
 			System.out.println("Finished!!");
 		}
