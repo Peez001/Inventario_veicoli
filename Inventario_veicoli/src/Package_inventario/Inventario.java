@@ -1,5 +1,7 @@
 package Package_inventario;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,42 +14,60 @@ public class Inventario {
 	
 	//private final static String FILE = "file.txt";
 	
-	ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
+	private ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
 	
 	public Inventario(ArrayList<Veicolo> listaVeicoli) {
 		this.listaVeicoli = listaVeicoli;
 	}
+	
+	public Inventario() {
+		this.listaVeicoli = new ArrayList<Veicolo>();
+	}
 
 	// Aggiunge in automatico all'inizio del programma i Veicoli dal file di testo all'arrayList
-	public void inizio(String file) {
+	public void inizio(File file) {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine()) {
+			while(in.hasNextLine() && !(in.nextLine().length() == 0)) {
 				//System.out.println(in.nextLine());
 				String targa = in.next();
 				String modello = in.next();
 				String marca = in.next();
 				int x = Integer.parseInt(in.next());
 				String tipo = in.next();
-				if(tipo == "Moto"){
+				if(tipo.equals("Moto")){
 					Moto tempMoto = new Moto(marca, targa, modello, x);
 					aggiungiVeicolo(tempMoto);
 				}
-				if(tipo == "Automobile"){
+				else if(tipo.equals("Automobile")){
 					Automobile tempAuto = new Automobile(marca, targa, modello, x);
 					aggiungiVeicolo(tempAuto);
 				}
-				if(tipo == "Camion"){
+				else if(tipo.equals("Camion")){
 					Camion tempCamion = new Camion(marca, targa, modello, x);
 					aggiungiVeicolo(tempCamion);
 				}
+				else throw new IllegalArgumentException();
+				
 			}
 			reader.close();
 			in.close();
-		}catch (IOException e) {
-			System.out.println("Non esiste un inventario esistente"+e);
-		}	
+		} catch (FileNotFoundException e) {
+			System.out.println("File non esistente"+e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());	
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Why dont you funzioni");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		finally {
+			System.out.println("Inizializzazione Terminata...");
+		}
 	}
 	
 	// Aggiunge il veicolo nell'arrayList
@@ -56,9 +76,9 @@ public class Inventario {
 	}
 	
 	// Aggiunge il veicolo nel file di testo
-	public void aggiungiVeicoloFile(Veicolo v, String file) {
+	public void aggiungiVeicoloFile(Veicolo v, File file) {
 		try {
-			FileWriter writer = new FileWriter(file,false); // da controllare
+			FileWriter writer = new FileWriter(file,true); // da controllare
 			PrintWriter out = new PrintWriter(writer);
 			if(v.getClass() == Moto.class) {
 				Moto m = (Moto)v;

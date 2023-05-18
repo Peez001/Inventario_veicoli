@@ -11,7 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+<<<<<<< HEAD
 //import java.awt.event.WindowListener;
+=======
+import java.awt.event.WindowListener;
+import java.io.File;
+>>>>>>> d724fcfc3589eb55f6ce19d4f57776acecd23c85
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,18 +55,11 @@ public class GUIVeicoli extends JFrame{
 	Color coloreSfondo = new Color(0,94,131); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
-	public GUIVeicoli(Inventario inventario) {
-		
-		init(inventario);
-		
-	}
-	
-	//inizializzazione della GUI
-	private void init(Inventario inventario) {
+	public GUIVeicoli(Inventario inventario, File file) {
 		
 		schermataIniziale();	
 		schermataInventario();	
-		schermataAddVeicolo(inventario);
+		schermataAddVeicolo(inventario, file);
 		schermataFind(inventario);
 		schermataStamp(inventario);
 		
@@ -158,7 +156,7 @@ public class GUIVeicoli extends JFrame{
 	}
 
 	//schermata inserimento dati e aggiunta veicolo
-	private void schermataAddVeicolo(Inventario inventario) {
+	private void schermataAddVeicolo(Inventario inventario, File file) {
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
 		frameAggiungiVeicolo.setVisible(false);
@@ -383,18 +381,21 @@ public class GUIVeicoli extends JFrame{
 						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
 							 Automobile auto = new Automobile(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
 							 inventario.aggiungiVeicolo(auto);
+							 inventario.aggiungiVeicoloFile(auto, file);
 							 JOptionPane.showMessageDialog(null, auto.toString() + "\n Automobile aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 						 	}
 					} else if(menuATendina.getSelectedItem().toString().equals("MOTO")) {
 						if(!testoCilindrata.getText().isEmpty()){
 							Moto moto = new Moto(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
 							inventario.aggiungiVeicolo(moto);
+							inventario.aggiungiVeicoloFile(moto, file);
 							JOptionPane.showMessageDialog(null, moto.toString() + "\n Moto aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 					} else {
 						if(!testoPortataMassima.getText().isEmpty()){
 							Camion camion = new Camion(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
 							inventario.aggiungiVeicolo(camion);
+							inventario.aggiungiVeicoloFile(camion, file);
 							JOptionPane.showMessageDialog(null, camion.toString() + "\n Camion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
@@ -496,6 +497,10 @@ public class GUIVeicoli extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				frameStamp.setVisible(true);
 				areaStampa.setText("");
+<<<<<<< HEAD
+=======
+				
+>>>>>>> d724fcfc3589eb55f6ce19d4f57776acecd23c85
 				List<String> myList = inventario.stampaLista();
 				
 				for (String s : myList) {
@@ -533,16 +538,12 @@ public class GUIVeicoli extends JFrame{
 
 	public static void main(String[] args) {
 		
-		ArrayList<Veicolo> listaVeicoli = new ArrayList<>();
-		//Moto moto1 = new Moto("Skoda", "ES652JJ", "Hybrid_Sium", 13456);
-		//Moto moto2 = new Moto("vecio", "XD666LO", "motorola", 6);
-		Inventario inventario = new Inventario(listaVeicoli);
-		//inventario.aggiungiVeicolo(moto1);
-		//inventario.aggiungiVeicolo(moto2);
-		//Inventario inventario_prova = new Inventario(listaVeicoli);
-		//inventario.inizio();
-		GUIVeicoli gui = new GUIVeicoli(inventario);
+		Inventario inventario = new Inventario();
+		File file = new File("file.txt");
+		inventario.inizio(file);
+		GUIVeicoli gui = new GUIVeicoli(inventario, file);
 		gui.frameIniziale.setVisible(true);
+		
 		
 	}
 }
