@@ -6,6 +6,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,10 +26,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 
 public class GUIVeicoli extends JFrame{
@@ -47,7 +53,7 @@ public class GUIVeicoli extends JFrame{
 	private JButton bottoneRimuoviVeicolo;
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-	Color coloreSfondo = new Color(193, 223, 240); //Imposto il colore dello sfondo	
+	Color coloreSfondo = new Color(40,40,128); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
 	public GUIVeicoli(Inventario inventario, File file) {
@@ -82,24 +88,44 @@ public class GUIVeicoli extends JFrame{
 		immagine.setVerticalAlignment(JLabel.CENTER);
 		
 		JLabel etichetta = new JLabel("INVENTARIO VEICOLI"); //Creo l'etichetta
-		etichetta.setFont(font); //Imposto il font dell'etichetta
+		etichetta.setFont(new Font("Helvetica", Font.BOLD, 40)); //Font un po' piu grosso
 		etichetta.setHorizontalAlignment(JLabel.CENTER); //Imposto la posizione orizzontale del testo rispetto all'immagine
 		etichetta.setVerticalAlignment(JLabel.CENTER); //Imposto la posizione verticale del testo rispetto all'immagine
 		
 		JButton bottoneInizio = new JButton("ACCEDI ALL'INVENTARIO"); //Creo il bottone inizio
 		bottoneInizio.setFocusable(false); //Tolgo la box attorno al testo del bottone
-		bottoneInizio.setFont(font); //Imposto il font del bottone
+		bottoneInizio.setFont(new Font("Helvetica", Font.BOLD, 40)); //Font un po' piu grosso
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT); //Allineamento bottone
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
-		bottoneInizio.setBackground(new Color(53, 135, 164));
-		bottoneInizio.setForeground(new Color(250,250,250));
+		bottoneInizio.setBackground(new Color(220, 220, 220)); //Colori per il bottone iniziale
+		bottoneInizio.setForeground(new Color(50,50,50));
 		
-		pannelloIniziale = new JPanel(); //Creo pannello iniziale
-		pannelloIniziale.setLayout(new BorderLayout()); //Gestisco pannello iniziale con BorderLayout
+		pannelloIniziale = new JPanel() { //pannello iniziale con colore gradiente
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			protected void paintComponent(Graphics g) {
+				int width = getWidth();
+				int height = getHeight();
+				Graphics2D g2d = (Graphics2D) g;
+				Color color1 = coloreSfondo;  
+		        Color color2 = new Color(105, 186, 200); 
+				GradientPaint gradient = new GradientPaint(0, 0, color2, width, height, color1);
+		        g2d.setPaint(gradient);
+		        g2d.fillRect(0, 0, width, height);
+				
+			}
+
+		}; //Creo pannello iniziale
+		
+		pannelloIniziale.setLayout(new BorderLayout(5,1)); //Gestisco pannello iniziale con BorderLayout
 		
 		JPanel pannelloCentrale = new JPanel();	//Creo pannello centrale
-		pannelloCentrale.setLayout(new GridLayout(3,1)); //Gestisco pannello centrale con GridLayout
-		pannelloCentrale.setBackground(coloreSfondo);
+		pannelloCentrale.setOpaque(false);
+		pannelloCentrale.setLayout(new GridLayout(4,1)); //Gestisco pannello centrale con GridLayout
+		//pannelloCentrale.setBackground(coloreSfondo);
 		pannelloCentrale.setBorder(new EmptyBorder(120, 120, 120, 120)); //Padding
 		
 		pannelloIniziale.add(pannelloCentrale);
@@ -124,9 +150,26 @@ public class GUIVeicoli extends JFrame{
 	//schermata selezione azioni
 	private void schermataInventario() {
 		
-		pannelloInventario = new JPanel();
+		pannelloInventario = new JPanel(){ //pannello inventario con colore gradiente
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			protected void paintComponent(Graphics g) {
+				int width = getWidth();
+				int height = getHeight();
+				Graphics2D g2d = (Graphics2D) g;
+				Color color1 = coloreSfondo;  
+		        Color color2 = new Color(105, 186, 200); 
+				GradientPaint gradient = new GradientPaint(0, 0, color2, width, height, color1);
+		        g2d.setPaint(gradient);
+		        g2d.fillRect(0, 0, width, height);
+				
+			}
+
+		};
 		pannelloInventario.setLayout(new GridLayout(4,1,0,40));
-		pannelloInventario.setBackground(coloreSfondo);
 		pannelloInventario.setBorder(new EmptyBorder(80,80,80,80));
 
 		bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
@@ -383,8 +426,14 @@ public class GUIVeicoli extends JFrame{
 					//oops
 				}
 				
+				boolean targaValida = false;
+				if(!inventario.trovaVeicolo(testoTarga.getText()).equals("Veicolo non presente")) {
+					testoTarga.setText("");
+					targaValida = false;
+				} else {targaValida = true;}
+			
 				//se ho inserito un numero valido, allora aggiungo il veicolo
-				if(isNumero && numeroCorretto) {
+				if(isNumero && numeroCorretto && targaValida) {
 					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
 						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
@@ -410,15 +459,21 @@ public class GUIVeicoli extends JFrame{
 						}
 					pulisciTextFields();
 					} else {
-					JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero! Inoltre, deve essere maggiore di zero e rispettare questi parametri:"
-							+ " \n Numero porte massimo ---> 5 "
-							+ " \n Cilindrata massima 	---> 8000 cc"
-							+ " \n Portata massima 		---> 50 t"
-							+ "", "Errore", JOptionPane.ERROR_MESSAGE);
+						if(!isNumero) { //se non ho inserito un numero
+							JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
+						} else if (!numeroCorretto) { //se il numero inserito non rispetta i limiti
+								JOptionPane.showMessageDialog(null, "La specifica deve rispettare questi parametri:"
+										+ " \n Numero porte massimo ---> 5 "
+										+ " \n Cilindrata massima 	---> 8000 cc"
+										+ " \n Portata massima 		---> 50 t"
+										+ "", "Errore", JOptionPane.ERROR_MESSAGE);
+						} else { //se la targa esiste già 
+							JOptionPane.showMessageDialog(null, "Esiste gi\u00E0 un veicolo con questa targa. Inserirne un'altra.", "Errore", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 
-			public void pulisciTextFields() {
+			private void pulisciTextFields() {
 				ArrayList<Component> componenti = new ArrayList<>();
 				for(Component c : pannelloDatiVeicolo.getComponents()) {
 					componenti.add(c);
@@ -432,6 +487,7 @@ public class GUIVeicoli extends JFrame{
 					}
 				}
 			}
+			
         });
 		
 		//Disattivo i bottoni del frame sottostante
