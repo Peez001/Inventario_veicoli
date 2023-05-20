@@ -122,12 +122,12 @@ public class GUIVeicoli extends JFrame{
 		pannelloCentrale.setLayout(new GridLayout(4,1)); //Gestisco pannello centrale con GridLayout
 		pannelloCentrale.setBorder(new EmptyBorder(120, 120, 120, 120)); //Padding
 		
-		pannelloIniziale.add(pannelloCentrale);
-		
 		//Aggiungo immagine etichetta e bottoneInizio al pannello centrale
 		pannelloCentrale.add(immagine);
 		pannelloCentrale.add(etichetta);
 		pannelloCentrale.add(bottoneInizio);
+		
+		pannelloIniziale.add(pannelloCentrale);
 		
 		//Il pannello centrale é nel pannelloIniziale, che é nel pannelloCards, che a sua volta é nel frameIniziale.
 		pannelloCards.add(pannelloIniziale);
@@ -138,7 +138,6 @@ public class GUIVeicoli extends JFrame{
 				cardLayout.next(pannelloCards);
 			}
 		});
-		
 	}
 
 	//schermata selezione azioni
@@ -159,7 +158,6 @@ public class GUIVeicoli extends JFrame{
 				GradientPaint gradient = new GradientPaint(0, 0, color2, width, height, color1);
 		        g2d.setPaint(gradient);
 		        g2d.fillRect(0, 0, width, height);
-				
 			}
 
 		};
@@ -295,6 +293,9 @@ public class GUIVeicoli extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {		
 				rimuoviContenuto(pannelloSpecifiche);
+				testoTarga.setText("");
+				testoMarca.setText("");
+				testoModello.setText("");
 				int numeroScelto = menuATendina.getSelectedIndex();
 				if(numeroScelto == 0) {
 					pannelloSpecifiche.add(numeroPorte);
@@ -306,11 +307,11 @@ public class GUIVeicoli extends JFrame{
 					pannelloSpecifiche.add(portataMassima);
 					pannelloSpecifiche.add(testoPortataMassima);
 				}
-				pannelloSpecifiche.validate();
+				pannelloSpecifiche.validate(); //"ricostruisco" il pannello
 				pannelloSpecifiche.repaint();
 			}
 
-			private void rimuoviContenuto(JPanel pannello) {
+			private void rimuoviContenuto(JPanel pannello) { //rimuovo i componenti (JLabel e JTextField) che sono nel pannello passato come argomento
 				Component[] listaComponenti = pannello.getComponents();
 				for(Component c : listaComponenti){
 				    if(c instanceof JLabel || c instanceof JTextField){
@@ -318,6 +319,9 @@ public class GUIVeicoli extends JFrame{
 				    }
 				}
 			}
+			
+			
+			
 			});
 		
 		//aggiungo il pannelloSpecifiche al contenitoreSpecifiche. Sarà nella posizione più in alto
@@ -455,7 +459,7 @@ public class GUIVeicoli extends JFrame{
 							JOptionPane.showMessageDialog(null, camion.toString() + "\nCamion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
-					pulisciTextFields();
+					pulisciTextFields(); //se l'aggiunta è andata a buon fine, tolgo tutto dai campi di testo
 					} else {
 						if(!isNumero) { //se non ho inserito un numero
 							JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -485,11 +489,10 @@ public class GUIVeicoli extends JFrame{
 					}
 				}
 			}
-			
         });
 		
 		//Disattivo i bottoni del frame sottostante
-		disable_enabled_buttons(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
+		abilitaPulsanti(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
 		
 	}
 
@@ -530,7 +533,7 @@ public class GUIVeicoli extends JFrame{
 		frameTarga.add(pannelloTarga);
 		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		disable_enabled_buttons(frameTarga, bottoneTrovaVeicolo);
+		abilitaPulsanti(frameTarga, bottoneTrovaVeicolo);
 		
 		// Listener per la ricerca al click del pulsante ok
 		bottoneConferma.addActionListener(new ActionListener(){
@@ -549,6 +552,7 @@ public class GUIVeicoli extends JFrame{
 		//Creo un'area di testo per stampare l'elenco
 		JTextArea areaStampa = new JTextArea();
 		areaStampa.setFont(new Font("Helvetica", Font.PLAIN, 20));
+		areaStampa.setEditable(false); 
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
@@ -558,8 +562,8 @@ public class GUIVeicoli extends JFrame{
 		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
 		//listaVeicoli.setFont(font); // Non so se conviene, non si legge nulla dopo lol
 		
-		// richiamo la funzione per abilitare e disabilare i bottoni
-		disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
+		// richiamo la funzione per abilitare e disabilitare i bottoni
+		abilitaPulsanti(frameStamp, bottoneStampaVeicoli);
 				
 		// LISTENERS				
 		bottoneStampaVeicoli.addActionListener(new ActionListener(){
@@ -576,6 +580,7 @@ public class GUIVeicoli extends JFrame{
 		frameStamp.add(areaStampa);
 	}
 	
+	//schermata di rimozione dei veicoli
 	private void schermataRimuovi(Inventario inventario, File file) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Rimuovi
@@ -612,7 +617,7 @@ public class GUIVeicoli extends JFrame{
 		frameRimuovi.add(pannelloRimuovi);
 		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		disable_enabled_buttons(frameRimuovi, bottoneRimuoviVeicolo);
+		abilitaPulsanti(frameRimuovi, bottoneRimuoviVeicolo);
 		
 		// Listener per la ricerca al click del pulsante rimuovi
 		bottoneRimuovi.addActionListener(new ActionListener(){
@@ -628,8 +633,8 @@ public class GUIVeicoli extends JFrame{
 	
 	}
 	
-	// Metodo per disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
-	private void disable_enabled_buttons(JFrame frameCorrente, JButton bottoneSelezionato) {
+	// Metodo per attivare il frameCorrente e disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
+	private void abilitaPulsanti(JFrame frameCorrente, JButton bottoneSelezionato) {
 		// Listener per la disabilitazione di pagina precedente
 		bottoneSelezionato.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
