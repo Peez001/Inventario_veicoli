@@ -552,7 +552,7 @@ public class GUIVeicoli extends JFrame{
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
-		frameStamp.setSize(700, 700);
+		frameStamp.setSize(1000, 700);
 		frameStamp.getContentPane().setBackground(coloreSfondo);
 		frameStamp.setLayout(new GridLayout(1, 1)); // Definisco il Layout manager del nuovo frame
 		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
