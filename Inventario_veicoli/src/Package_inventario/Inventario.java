@@ -56,10 +56,8 @@ public class Inventario {
 		} catch (FileNotFoundException e) {
 			System.out.println("File non esistente"+e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());	
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Why dont you funzioni");
 		} catch (Exception e) {
 			//System.out.println(e.getMessage());
@@ -148,4 +146,6 @@ public class Inventario {
 		}
 		return "Veicolo non presente";
 	}
+
+	
 }

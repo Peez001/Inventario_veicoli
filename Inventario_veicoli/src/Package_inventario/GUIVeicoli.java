@@ -293,7 +293,7 @@ public class GUIVeicoli extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {		
 				rimuoviContenuto(pannelloSpecifiche);
-				testoTarga.setText("");
+				testoTarga.setText(""); //quando cambio la selezione del menù a tendina resetto i campi
 				testoMarca.setText("");
 				testoModello.setText("");
 				int numeroScelto = menuATendina.getSelectedIndex();
@@ -319,10 +319,7 @@ public class GUIVeicoli extends JFrame{
 				    }
 				}
 			}
-			
-			
-			
-			});
+		});
 		
 		//aggiungo il pannelloSpecifiche al contenitoreSpecifiche. Sarà nella posizione più in alto
 		contenitoreSpecifiche.add(pannelloSpecifiche);
@@ -392,7 +389,6 @@ public class GUIVeicoli extends JFrame{
 				boolean isNumero = (testoNumeroPorte.getText().matches(cifre) || 
 						testoCilindrata.getText().matches(cifre) || 
 						testoPortataMassima.getText().matches(cifre));
-				
 				
 				//controllo che non sia troppo grande (bruttissimo)
 				boolean numeroCorretto = false;
@@ -493,7 +489,6 @@ public class GUIVeicoli extends JFrame{
 		
 		//Disattivo i bottoni del frame sottostante
 		abilitaPulsanti(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
-		
 	}
 
 	//schermata per trovare un veicolo
@@ -556,7 +551,7 @@ public class GUIVeicoli extends JFrame{
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
-		frameStamp.setSize(700, 700);
+		frameStamp.setSize(900, 700);
 		frameStamp.getContentPane().setBackground(coloreSfondo);
 		frameStamp.setLayout(new GridLayout(1, 1)); // Definisco il Layout manager del nuovo frame
 		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
