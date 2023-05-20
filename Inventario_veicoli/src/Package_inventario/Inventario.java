@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Inventario {
 	
+	private static final String É = "\u00E9";
 	//private final static String FILE = "file.txt";
 	
 	private ArrayList<Veicolo> listaVeicoli = new ArrayList<Veicolo>();
@@ -143,7 +144,7 @@ public class Inventario {
 	public String trovaVeicolo(String targa) {
 		for(Veicolo v : listaVeicoli) {
 			if(v.getTarga().toLowerCase().equals(targa.toLowerCase()))
-				return "Il veicolo \u00E9 presente.\n" + v.toString();
+				return "Il veicolo " + É + " presente.\n" + v.toString();
 		}
 		return "Veicolo non presente";
 	}

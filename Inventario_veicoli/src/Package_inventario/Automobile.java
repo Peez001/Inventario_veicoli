@@ -18,9 +18,7 @@ public class Automobile extends Veicolo {
 	}
 
 	public String toString() {
-		return "Questo veicolo \u00E9 una automobile con "+
-				this.numero_porte+
-		" porte. "+super.toString();
+		return "Automobile con "+ this.numero_porte + " porte. "+ super.toString();
 	}
 	
 }

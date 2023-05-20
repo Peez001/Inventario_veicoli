@@ -18,9 +18,7 @@ public class Camion extends Veicolo {
 	}
 	
 	public String toString() {
-		return "Questo veicolo \u00E9 una camion con una "
-				+ "portata di carico di "+this.potata_carico+
-		" kg. "+super.toString();
+		return "Camion con una portata massima di " + this.potata_carico + " tonnellate. " + super.toString();
 	}
 	
 }

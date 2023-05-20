@@ -26,17 +26,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 
 public class GUIVeicoli extends JFrame{
 
+	private static final String É = "\u00E9";
+	private static final String FRECCIA_ELENCO = "\u2023";
 	private static final int TONNELLATE_MASSIME = 50;
 	private static final int CILINDRATA_MASSIMA = 8000;
 	private static final int NUMERO_PORTE_MASSIMO = 5;
@@ -53,7 +52,7 @@ public class GUIVeicoli extends JFrame{
 	private JButton bottoneRimuoviVeicolo;
 	
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
-	Color coloreSfondo = new Color(40,40,128); //Imposto il colore dello sfondo	
+	Color coloreSfondo = new Color(105, 156, 180); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
 	public GUIVeicoli(Inventario inventario, File file) {
@@ -74,12 +73,9 @@ public class GUIVeicoli extends JFrame{
 		pannelloCards = new JPanel(cardLayout);// pannello per le prime due card sequenziali
 		
 		frameIniziale = new JFrame("Inventario Veicoli"); //Creo istanza del frame e metto il titolo
-		//frameIniziale.setExtendedState(JFrame.MAXIMIZED_BOTH); //inizialmente l'interfaccia compare a schermo intero
 		frameIniziale.setSize(800,800); //Imposto la dimensione iniziale del frame
-		//frameIniziale.setVisible(true);	//Rendo il frame visibile
 		frameIniziale.getContentPane().setBackground(coloreSfondo); //Scelgo il colore dello sfondo
 		frameIniziale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Alla pressione della X rossa chiudo l'applicazione
-		//frameIniziale.setLayout(cardLayout); //Definisco il Layout manager del frame esterno
 		frameIniziale.setIconImage(logo.getImage()); //Imposto l'icona del frame
 			
 		JLabel immagine = new JLabel();
@@ -97,7 +93,6 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setFont(new Font("Helvetica", Font.BOLD, 40)); //Font un po' piu grosso
 		bottoneInizio.setAlignmentX(CENTER_ALIGNMENT); //Allineamento bottone
 		bottoneInizio.setAlignmentY(CENTER_ALIGNMENT);
-		bottoneInizio.setBackground(new Color(220, 220, 220)); //Colori per il bottone iniziale
 		bottoneInizio.setForeground(new Color(50,50,50));
 		
 		pannelloIniziale = new JPanel() { //pannello iniziale con colore gradiente
@@ -111,7 +106,7 @@ public class GUIVeicoli extends JFrame{
 				int height = getHeight();
 				Graphics2D g2d = (Graphics2D) g;
 				Color color1 = coloreSfondo;  
-		        Color color2 = new Color(105, 186, 200); 
+		        Color color2 = new Color(80,80,148);; 
 				GradientPaint gradient = new GradientPaint(0, 0, color2, width, height, color1);
 		        g2d.setPaint(gradient);
 		        g2d.fillRect(0, 0, width, height);
@@ -125,7 +120,6 @@ public class GUIVeicoli extends JFrame{
 		JPanel pannelloCentrale = new JPanel();	//Creo pannello centrale
 		pannelloCentrale.setOpaque(false);
 		pannelloCentrale.setLayout(new GridLayout(4,1)); //Gestisco pannello centrale con GridLayout
-		//pannelloCentrale.setBackground(coloreSfondo);
 		pannelloCentrale.setBorder(new EmptyBorder(120, 120, 120, 120)); //Padding
 		
 		pannelloIniziale.add(pannelloCentrale);
@@ -161,7 +155,7 @@ public class GUIVeicoli extends JFrame{
 				int height = getHeight();
 				Graphics2D g2d = (Graphics2D) g;
 				Color color1 = coloreSfondo;  
-		        Color color2 = new Color(105, 186, 200); 
+		        Color color2 = new Color(80,80,148); 
 				GradientPaint gradient = new GradientPaint(0, 0, color2, width, height, color1);
 		        g2d.setPaint(gradient);
 		        g2d.fillRect(0, 0, width, height);
@@ -192,9 +186,9 @@ public class GUIVeicoli extends JFrame{
 		bottoneRimuoviVeicolo.setFont(font);
 		bottoneRimuoviVeicolo.setFocusable(false);
 		
-		pannelloInventario.add(bottoneTrovaVeicolo);
 		pannelloInventario.add(bottoneAggiungiVeicolo);
 		pannelloInventario.add(bottoneStampaVeicoli);
+		pannelloInventario.add(bottoneTrovaVeicolo);
 		pannelloInventario.add(bottoneRimuoviVeicolo);
 		
 		pannelloCards.add(pannelloInventario);
@@ -218,6 +212,8 @@ public class GUIVeicoli extends JFrame{
 	
 		//Definisco il pannello che contiene i dati generali (targa, marca, modello) dei veicoli
 		JPanel pannelloDatiVeicolo = new JPanel(new GridLayout(4,2));
+		pannelloDatiVeicolo.setBackground(coloreSfondo);
+		pannelloDatiVeicolo.setBorder(null);
 		
 		//Label per scelta del veicolo
 		JLabel sceltaVeicolo = new JLabel("SCEGLI VEICOLO");
@@ -267,6 +263,7 @@ public class GUIVeicoli extends JFrame{
 		//Camion	 ---> Portata Massima		
 		JPanel pannelloSpecifiche = new JPanel();
 		pannelloSpecifiche.setLayout(new GridLayout(1,2));
+		pannelloSpecifiche.setBackground(coloreSfondo);
 		
 		//Label e TextField per il numero porte
 		JLabel numeroPorte = new JLabel("INSERISCI NUMERO PORTE");
@@ -290,6 +287,7 @@ public class GUIVeicoli extends JFrame{
 		//Lo divido in 4 righe così la dimensione della Label e TextField dei parametri specifici sarà sempre uguale agli altri dati.
 		JPanel contenitoreSpecifiche = new JPanel();
 		contenitoreSpecifiche.setLayout(new GridLayout(4,1));
+		contenitoreSpecifiche.setBackground(coloreSfondo);
 		
 		//Creo un listener per il menù a tendina. Si aggiorna quando ci si interagisce, e in base alla scelta aggiungo al pannelloSpecifiche.
 		//Quando scelgo un nuovo elemento del menù tolgo quello che c'era prima con il metodo rimuoviContenuto.
@@ -440,21 +438,21 @@ public class GUIVeicoli extends JFrame{
 							 Automobile auto = new Automobile(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
 							 inventario.aggiungiVeicolo(auto);
 							 inventario.aggiungiVeicoloFile(auto, file);
-							 JOptionPane.showMessageDialog(null, auto.toString() + "\n Automobile aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+							 JOptionPane.showMessageDialog(null, auto.toString() + "\nAutomobile aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 						 	}
 					} else if(menuATendina.getSelectedItem().toString().equals("MOTO")) {
 						if(!testoCilindrata.getText().isEmpty()){
 							Moto moto = new Moto(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoCilindrata.getText()));
 							inventario.aggiungiVeicolo(moto);
 							inventario.aggiungiVeicoloFile(moto, file);
-							JOptionPane.showMessageDialog(null, moto.toString() + "\n Moto aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, moto.toString() + "\nMoto aggiunta correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 					} else {
 						if(!testoPortataMassima.getText().isEmpty()){
 							Camion camion = new Camion(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
 							inventario.aggiungiVeicolo(camion);
 							inventario.aggiungiVeicoloFile(camion, file);
-							JOptionPane.showMessageDialog(null, camion.toString() + "\n Camion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, camion.toString() + "\nCamion aggiunto correttamente all'inventario.", "Operazione terminata", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					pulisciTextFields();
@@ -463,11 +461,11 @@ public class GUIVeicoli extends JFrame{
 							JOptionPane.showMessageDialog(null, "L'ultimo campo deve essere un numero!", "Errore", JOptionPane.ERROR_MESSAGE);
 						} else if (!numeroCorretto) { //se il numero inserito non rispetta i limiti
 								JOptionPane.showMessageDialog(null, "La specifica deve rispettare questi parametri:"
-										+ " \n Numero porte massimo ---> 5 "
-										+ " \n Cilindrata massima 	---> 8000 cc"
-										+ " \n Portata massima 		---> 50 t"
-										+ "", "Errore", JOptionPane.ERROR_MESSAGE);
-						} else { //se la targa esiste già 
+										+ "\n Numero porte massimo ---> " + NUMERO_PORTE_MASSIMO 
+										+ "\n Cilindrata massima 	---> " + CILINDRATA_MASSIMA + " cc"
+										+ "\n Portata massima 		---> " + TONNELLATE_MASSIME + " t",
+										"Errore", JOptionPane.ERROR_MESSAGE);
+						} else { //se la targa esiste già (\u00E0 = à)
 							JOptionPane.showMessageDialog(null, "Esiste gi\u00E0 un veicolo con questa targa. Inserirne un'altra.", "Errore", JOptionPane.ERROR_MESSAGE);
 						}
 					}
@@ -499,16 +497,21 @@ public class GUIVeicoli extends JFrame{
 	private void schermataFind(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Find		
-		JFrame pannelloTarga = new JFrame("Trova un veicolo");
-		pannelloTarga.setSize(350, 160);
-		pannelloTarga.getContentPane().setBackground(coloreSfondo);
+		JFrame frameTarga = new JFrame("Trova un veicolo");
+		frameTarga.setSize(560, 260);
+		frameTarga.setIconImage(logo.getImage()); //Imposto l'icona del frame
+		
+		JPanel pannelloTarga = new JPanel();
+		pannelloTarga.setBackground(coloreSfondo);
 		pannelloTarga.setLayout(new GridLayout(3, 1)); //Definisco il Layout manager del frame esterno
-		pannelloTarga.setIconImage(logo.getImage()); //Imposto l'icona del frame
+		pannelloTarga.setBorder(new EmptyBorder(30, 30, 30, 30)); //Padding
 		
 		// creo un area di testo per far comparire il messaggio di richiesta di inserimento
-		JTextField messagioRichiestaTarga = new JTextField("Inserisci targa:");
-		messagioRichiestaTarga.setFont(font);
-		messagioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+		JTextField messaggioRichiestaTarga = new JTextField("Inserisci targa:");
+		messaggioRichiestaTarga.setFont(font);
+		messaggioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+		messaggioRichiestaTarga.setOpaque(false);
+		messaggioRichiestaTarga.setBorder(null);
         
 		// creo un area di testo per far comparire l'are di inserimento
 		JTextField inserisciTarga = new JTextField();
@@ -517,14 +520,17 @@ public class GUIVeicoli extends JFrame{
 		// bottone per confermare l'inserimento
 		JButton bottoneConferma = new JButton("Ok");
 		bottoneConferma.setFocusable(false);
+		bottoneConferma.setFont(font);
 
 		// aggiungo gli elementi al pannelloTarga
-		pannelloTarga.add(messagioRichiestaTarga);
+		pannelloTarga.add(messaggioRichiestaTarga);
 		pannelloTarga.add(inserisciTarga);
 		pannelloTarga.add(bottoneConferma);
 		
+		frameTarga.add(pannelloTarga);
+		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		disable_enabled_buttons(pannelloTarga, bottoneTrovaVeicolo);
+		disable_enabled_buttons(frameTarga, bottoneTrovaVeicolo);
 		
 		// Listener per la ricerca al click del pulsante ok
 		bottoneConferma.addActionListener(new ActionListener(){
@@ -538,11 +544,11 @@ public class GUIVeicoli extends JFrame{
 	private void schermataStamp(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Stamp
-		JFrame frameStamp = new JFrame("Stampa la lista dei veicoli");
+		JFrame frameStamp = new JFrame("Lista dei veicoli");
 		
 		//Creo un'area di testo per stampare l'elenco
 		JTextArea areaStampa = new JTextArea();
-		areaStampa.setFont(new Font("Helvetica", Font.PLAIN, 15));
+		areaStampa.setFont(new Font("Helvetica", Font.PLAIN, 20));
 		//JScrollPane scrollPane = new JScrollPane(listaVeicoli);
 		
 		frameStamp.setVisible(false);
@@ -552,8 +558,6 @@ public class GUIVeicoli extends JFrame{
 		frameStamp.setIconImage(logo.getImage()); // Imposto l'icona del frame
 		//listaVeicoli.setFont(font); // Non so se conviene, non si legge nulla dopo lol
 		
-		
-				
 		// richiamo la funzione per abilitare e disabilare i bottoni
 		disable_enabled_buttons(frameStamp, bottoneStampaVeicoli);
 				
@@ -564,27 +568,32 @@ public class GUIVeicoli extends JFrame{
 				areaStampa.setText("");
 				List<String> myList = inventario.stampaLista();
 				for (String s : myList) {
-					areaStampa.append(s+"\n");
+					areaStampa.append(FRECCIA_ELENCO + s + "\n");
 				}
-				// aggiungo l'elemento al frameStamp
-				frameStamp.add(areaStampa);
 			}
 		});
+		// aggiungo l'elemento al frameStamp
+		frameStamp.add(areaStampa);
 	}
 	
 	private void schermataRimuovi(Inventario inventario, File file) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Rimuovi
-		JFrame pannelloRimuovi = new JFrame("Rimuovi un veicolo");
-		pannelloRimuovi.setSize(350,160);
-		pannelloRimuovi.getContentPane().setBackground(coloreSfondo);
-		pannelloRimuovi.setLayout(new GridLayout(3,1));
-		pannelloRimuovi.setIconImage(logo.getImage());
+		JFrame frameRimuovi = new JFrame("Rimuovi un veicolo");
+		frameRimuovi.setSize(560,260);
+		frameRimuovi.setIconImage(logo.getImage());
 		
+		JPanel pannelloRimuovi = new JPanel();
+		pannelloRimuovi.setBackground(coloreSfondo);
+		pannelloRimuovi.setLayout(new GridLayout(3,1));
+		pannelloRimuovi.setBorder(new EmptyBorder(30, 30, 30, 30)); //Padding
+
 		// creo un area di testo per far comparire il messaggio di richiesta di inserimento		
-		JTextField messagioRichiestaTarga = new JTextField("Inserisci targa:");
-		messagioRichiestaTarga.setFont(font);
-		messagioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+		JTextField messaggioRichiestaTarga = new JTextField("Inserisci targa:");
+		messaggioRichiestaTarga.setFont(font);
+		messaggioRichiestaTarga.setEditable(false); // faccio in modo che non posso essere editabile
+		messaggioRichiestaTarga.setOpaque(false);
+		messaggioRichiestaTarga.setBorder(null);
 		
 		// creo un area di testo per far comparire l'are di inserimento
 		JTextField inserisciTarga = new JTextField();
@@ -593,35 +602,27 @@ public class GUIVeicoli extends JFrame{
 		// bottone per confermare l'inserimento
 		JButton bottoneRimuovi = new JButton("Rimuovi");
 		bottoneRimuovi.setFocusable(false);
+		bottoneRimuovi.setFont(font);
 	
 		// aggiungo gli elementi al pannello Rimuovi
-		pannelloRimuovi.add(messagioRichiestaTarga);
+		pannelloRimuovi.add(messaggioRichiestaTarga);
 		pannelloRimuovi.add(inserisciTarga);
 		pannelloRimuovi.add(bottoneRimuovi);
 		
+		frameRimuovi.add(pannelloRimuovi);
+		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		disable_enabled_buttons(pannelloRimuovi, bottoneRimuoviVeicolo);
+		disable_enabled_buttons(frameRimuovi, bottoneRimuoviVeicolo);
 		
 		// Listener per la ricerca al click del pulsante rimuovi
 		bottoneRimuovi.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-//				if(inventario.trovaVeicolo(inserisciTarga.getText()).equals("Veicolo non presente")) {
-//					
-//					System.out.println("Non � stato possibile rimuovere il veicolo in quanto non esiste");
-//				}
-//				else {
-//					
-//					System.out.println("Veicolo rimosso correttamente");
-//					inventario.rimuoviVeicolo(inserisciTarga.getText()); // BIG PROBLEMA
-//					inventario.rimuoviVeicoloFile(file);
-//				}
-				
 				if(inventario.rimuoviVeicolo(inserisciTarga.getText())) {
 					inventario.rimuoviVeicoloFile(file);
-					JOptionPane.showMessageDialog(null,"Veicolo rimosso correttamente","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					JOptionPane.showMessageDialog(null, "Veicolo con targa \"" + inserisciTarga.getText() + "\" rimosso correttamente.","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 				}
 				else
-					JOptionPane.showMessageDialog(null,"Non \u00E9 stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					JOptionPane.showMessageDialog(null,"Non " + É + " stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 			}
 		});
 	

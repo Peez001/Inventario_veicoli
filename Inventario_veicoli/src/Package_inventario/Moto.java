@@ -18,9 +18,7 @@ public class Moto extends Veicolo {
 	}
 	
 	public String toString() {
-		return "Questo veicolo \u00E9 una moto con una "
-				+ "cilindrata di "+this.cilindrata+
-		" cc. "+super.toString();
+		return "Moto con cilindrata di " + this.cilindrata + " cc. " + super.toString();
 	}
 	
 }
