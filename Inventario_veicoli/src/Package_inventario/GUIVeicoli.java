@@ -34,7 +34,7 @@ import javax.swing.DefaultComboBoxModel;
 
 public class GUIVeicoli extends JFrame{
 
-	private static final String É = "\u00E9";
+	private static final String essere = "\u00E9";
 	private static final String FRECCIA_ELENCO = "\u2023";
 	private static final int TONNELLATE_MASSIME = 50;
 	private static final int CILINDRATA_MASSIMA = 8000;
@@ -622,7 +622,7 @@ public class GUIVeicoli extends JFrame{
 					JOptionPane.showMessageDialog(null, "Veicolo con targa \"" + inserisciTarga.getText() + "\" rimosso correttamente.","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 				}
 				else
-					JOptionPane.showMessageDialog(null,"Non " + É + " stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
+					JOptionPane.showMessageDialog(null,"Non " + essere + " stato possibile rimuovere il veicolo in quanto non esiste","Risposta",JOptionPane.YES_NO_CANCEL_OPTION);
 			}
 		});
 	

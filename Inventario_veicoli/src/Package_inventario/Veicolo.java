@@ -2,7 +2,7 @@ package Package_inventario;
 
 public abstract class Veicolo {
 	
-	private static final String É = "\u00E9";
+	private static final String essere = "\u00E9";
 	private String marca;
 	private String targa;
 	private String modello;
@@ -36,7 +36,7 @@ public abstract class Veicolo {
 	
 	//\u00E9 = é. 
 	public String toString() {
-		return "Ha la targa " + this.targa + ", " + É + " un modello " + this.modello + ", della marca " + this.marca + ".";
+		return "Ha la targa " + this.targa + ", " + essere + " un modello " + this.modello + ", della marca " + this.marca + ".";
 	}
 	
 }
