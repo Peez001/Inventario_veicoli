@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +53,12 @@ public class GUIVeicoli extends JFrame{
 	ImageIcon logo = new ImageIcon("veicolo.png"); //Creo il logo. Il file é all'interno del progetto
 	Color coloreSfondo = new Color(105, 156, 180); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
-	
+
 	/**
-	 * Costruttore della classe GUIVeicoli
-	 * @param inventario dei veicoli
-	 * @param file di testo
+	 * Costruttore dell'interfaccia utente, richiama al suo interno dei metodi 
+	 * di inizializzazione. E' implementata la sequenzialit� grafica
+	 * @param inventario
+	 * @param file
 	 */
 	public GUIVeicoli(Inventario inventario, File file) {
 		
@@ -72,7 +72,13 @@ public class GUIVeicoli extends JFrame{
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Metodo per schermata all'avvio del programma. Immagine veicolo, etichetta e bottone.
+=======
+	 * Rende visibile la schermata introduttiva all'inerfaccia grafica
+	 * Possiede un pulsante di inizio che, tramite un'interfaccia a CardLayout, 
+	 * switcha alla card successiva, ossia il menu' principale della GUI.
+>>>>>>> a2fb9fcac9fdf067bc352dc9949f3642953e65a6
 	 */
 	private void schermataIniziale() {
 				
@@ -103,9 +109,7 @@ public class GUIVeicoli extends JFrame{
 		bottoneInizio.setForeground(new Color(50,50,50));
 		
 		pannelloIniziale = new JPanel() { //pannello iniziale con colore gradiente
-			/**
-			 * 
-			 */
+			
 			private static final long serialVersionUID = 1L;
 
 			protected void paintComponent(Graphics g) {
@@ -147,15 +151,13 @@ public class GUIVeicoli extends JFrame{
 		});
 	}
 
+
 	/** 
 	 * Metodo per schermata selezione azioni: trova veicolo, aggiungi veicolo, stampa lista, rimuovi veicolo.
 	 */
 	private void schermataInventario() {
 		
 		pannelloInventario = new JPanel(){ //pannello inventario con colore gradiente
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			protected void paintComponent(Graphics g) {
@@ -204,10 +206,18 @@ public class GUIVeicoli extends JFrame{
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Metodo per schermata inserimento dati e aggiunta veicolo. Controllo sul riempimento di tutti i campi prima dell'abilitazione dell'aggiunta.
 	 * Controllo sulla correttezza dei dati specifici del veicolo (ma non della targa).
 	 * @param inventario dei veicoli
 	 * @param file di testo
+=======
+	 * 
+	 * vezzo scrivi quella che c'� dentro
+	 * 
+	 * @param inventario
+	 * @param file
+>>>>>>> a2fb9fcac9fdf067bc352dc9949f3642953e65a6
 	 */
 	private void schermataAddVeicolo(Inventario inventario, File file) {
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
@@ -502,10 +512,15 @@ public class GUIVeicoli extends JFrame{
         });
 		
 		//Disattivo i bottoni del frame sottostante
-		abilitaPulsanti(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
+		abilitaDisabilitaPulsanti(frameAggiungiVeicolo, bottoneAggiungiVeicolo);
 	}
 
-	//schermata per trovare un veicolo
+	/**
+	 * Metodo che implementa la funzionalit� grafica del metodo trovaVeicolo.
+	 * prende come parametro l'inventario, in modo tale da agire sui suoi
+	 * veicoli utilizzando i metodi offerti dalla sua classe.
+	 * @param inventario
+	 */
 	private void schermataFind(Inventario inventario) {
 		
 		// creo un frame per contenere l'esecuzione iniziale del comando Find		
@@ -542,7 +557,14 @@ public class GUIVeicoli extends JFrame{
 		frameTarga.add(pannelloTarga);
 		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		abilitaPulsanti(frameTarga, bottoneTrovaVeicolo);
+		abilitaDisabilitaPulsanti(frameTarga, bottoneTrovaVeicolo);
+		
+		// Listener per la pulizia dei JTextField alla chiusura del panel
+		frameTarga.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+		       inserisciTarga.setText("");
+		        }
+		 });
 		
 		// Listener per la ricerca al click del pulsante ok
 		bottoneConferma.addActionListener(new ActionListener(){
@@ -572,7 +594,7 @@ public class GUIVeicoli extends JFrame{
 		//listaVeicoli.setFont(font); // Non so se conviene, non si legge nulla dopo lol
 		
 		// richiamo la funzione per abilitare e disabilitare i bottoni
-		abilitaPulsanti(frameStamp, bottoneStampaVeicoli);
+		abilitaDisabilitaPulsanti(frameStamp, bottoneStampaVeicoli);
 				
 		// LISTENERS				
 		bottoneStampaVeicoli.addActionListener(new ActionListener(){
@@ -626,7 +648,14 @@ public class GUIVeicoli extends JFrame{
 		frameRimuovi.add(pannelloRimuovi);
 		
 		// richiamo la funzione per abilitare e disabilare i bottoni
-		abilitaPulsanti(frameRimuovi, bottoneRimuoviVeicolo);
+		abilitaDisabilitaPulsanti(frameRimuovi, bottoneRimuoviVeicolo);
+		
+		// Listener per la pulizia dei JTextField alla chiusura del panel
+				frameRimuovi.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent e) {
+				       inserisciTarga.setText("");
+				        }
+				 });
 		
 		// Listener per la ricerca al click del pulsante rimuovi
 		bottoneRimuovi.addActionListener(new ActionListener(){
@@ -642,8 +671,13 @@ public class GUIVeicoli extends JFrame{
 	
 	}
 	
-	// Metodo per attivare il frameCorrente e disabilitare i bottoni della pagina principale e poi riattivarli al ritorno in essa
-	private void abilitaPulsanti(JFrame frameCorrente, JButton bottoneSelezionato) {
+	/**
+	 * Metodo per attivare il frameCorrente e disabilitare i bottoni della
+	 * pagina principale e poi riattivarli al ritorno in essa.
+	 * @param frameCorrente
+	 * @param bottoneSelezionato
+	 */
+	private void abilitaDisabilitaPulsanti(JFrame frameCorrente, JButton bottoneSelezionato) {
 		// Listener per la disabilitazione di pagina precedente
 		bottoneSelezionato.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
