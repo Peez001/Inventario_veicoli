@@ -23,7 +23,7 @@ public class Moto extends Veicolo {
 
 	/**
 	 * metodo che ritorna la cilindrata della moto
-	 * @return
+	 * @return cilindrata
 	 */
 	public int getCilindrata() {
 		return cilindrata;
