@@ -1,7 +1,7 @@
 package Package_inventario;
 
 /**
- * Classe che rappresenta l'oggetto Automobile
+ * Classe che rappresenta l'oggetto Camion
  * @author ChurPeezZoli
  * @since 04/2023
  */
@@ -10,7 +10,7 @@ public class Camion extends Veicolo {
 	private int potata_carico;
 	
 	/**
-	 * Costruttore della classe Automobile
+	 * Costruttore della classe Camion
 	 * @param marca
 	 * @param targa
 	 * @param modello
@@ -22,7 +22,7 @@ public class Camion extends Veicolo {
 	}
 
 	/**
-	 * metodo che ritorna la portata carico dell'automobile
+	 * metodo che ritorna la portata carico del camion
 	 * @return potata_carico
 	 */
 	public int getPotata_carico() {
@@ -30,7 +30,7 @@ public class Camion extends Veicolo {
 	}
 
 	/**
-	 * metodo che permette di settare la portata carico dell'automobile
+	 * metodo che permette di settare la portata carico del camion
 	 * @param potata_carico
 	 */
 	public void setPotata_carico(int potata_carico) {
@@ -38,7 +38,7 @@ public class Camion extends Veicolo {
 	}
 	
 	/**
-	 * metodo che ritorna la stringa che esplicita le proprietà dell'oggetto Automobile
+	 * metodo che ritorna la stringa che esplicita le proprietà dell'oggetto Camion
 	 */
 	public String toString() {
 		return "Camion con una portata massima di " + this.potata_carico + " tonnellate. " + super.toString();
