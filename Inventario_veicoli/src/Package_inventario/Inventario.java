@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe che rappresenta l'inventario e contiene i metodi per lavorare sulla lista di veicoli
+ * @author ChurPeezZoli
+ * @since 04/2023
+ */
 public class Inventario {
 	
 	private static final String essere = "\u00E9";
@@ -25,7 +30,10 @@ public class Inventario {
 		this.listaVeicoli = new ArrayList<Veicolo>();
 	}
 
-	// Aggiunge in automatico all'inizio del programma i Veicoli dal file di testo all'arrayList
+	/**
+	 * Metodo che aggiunge all'inizio del programma i Veicoli dal file di testo all'ArrayList
+	 * @param file
+	 */
 	public void inizio(File file) {
 		try {
 			FileReader reader = new FileReader(file);
@@ -68,12 +76,19 @@ public class Inventario {
 		}
 	}
 	
-	// Aggiunge il veicolo nell'arrayList
+	/**
+	 * metodo che aggiunge il veicolo passato nell'ArrayList
+	 * @param v
+	 */
 	public void aggiungiVeicolo(Veicolo v) {
 		listaVeicoli.add(v);
 	}
 	
-	// Aggiunge il veicolo nel file di testo
+	/**
+	 * metodo che stampa le proprietà del veicolo passato nel file
+	 * @param v
+	 * @param file
+	 */
 	public void aggiungiVeicoloFile(Veicolo v, File file) {
 		try {
 			FileWriter writer = new FileWriter(file,true); // da controllare
@@ -96,7 +111,11 @@ public class Inventario {
 		}
 	}
 	
-	// Rimuove il veicolo dall'arrayList
+	/**
+	 * metodo che rimuove il veicolo associato alla targa passata
+	 * @param targa
+	 * @return boolean che rappresenta se l'operazione è andata a buon fine
+	 */
 	public boolean rimuoviVeicolo(String targa) {
 		for(Veicolo v : listaVeicoli) {
 			if(v.getTarga().toLowerCase().equals(targa.toLowerCase())) {
@@ -107,7 +126,10 @@ public class Inventario {
 		return false;
 	}
 
-	// Rimuove il veicolo dal file di testo
+	/**
+	 * metodo che ristampa l'ArrayList aggiornata senza l'elemento rimosso nel file
+	 * @param file
+	 */
 	public void rimuoviVeicoloFile(File file) {
 		
 		try {
@@ -130,7 +152,11 @@ public class Inventario {
 		
 	}
 	
-	// Ritorna una Lista di String con tutti i metodi toString dei veicoli nell'inventario
+	
+	/**
+	 * Metodo che ritorna una List<String> con tutti i metodi toString dei veicoli nell'inventario
+	 * @return List<String> dei toString
+	 */
 	public List<String> stampaLista() {
 		List<String> stringList = new ArrayList<String>();
 		for(Veicolo v : listaVeicoli)
@@ -138,7 +164,11 @@ public class Inventario {
 		return stringList;
 	}
 	
-	// trovare un veicolo data la targa --> ritorna la stringa 
+	/**
+	 * metodo per trovare un veicolo data la targa --> ritorna la stringa
+	 * @param targa
+	 * @return String con il risultato
+	 */
 	public String trovaVeicolo(String targa) {
 		for(Veicolo v : listaVeicoli) {
 			if(v.getTarga().toLowerCase().equals(targa.toLowerCase()))
