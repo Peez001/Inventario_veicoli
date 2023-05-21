@@ -31,6 +31,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+/**
+ * Classe che compone la parte grafica del programma
+ * 
+ * @author ChurPeezZoli
+ * @since 04/2023
+ */
 public class GUIVeicoli extends JFrame {
 
 	private static final String essere = "\u00E9";
@@ -607,7 +613,12 @@ public class GUIVeicoli extends JFrame {
 		});
 	}
 
-	// schermata di stampa dei veicoli
+	/**
+	 * Metodo che implementa la funzionalità del metodoStamp.
+	 * Nella schermata si può leggere la lista dei veicoli presenti nell'inventario.
+	 * 
+	 * @param inventario
+	 */
 	private void schermataStamp(Inventario inventario) {
 
 		// creo un frame per contenere l'esecuzione iniziale del comando Stamp
@@ -645,7 +656,14 @@ public class GUIVeicoli extends JFrame {
 		frameStamp.add(areaStampa);
 	}
 
-	// schermata di rimozione dei veicoli
+	/**
+	 * Metodo che implementa la funzionalità del metodo rimuoviVeicolo.
+	 * Nella schermata c'è la possibilità di rimuovere un veicolo data la targa.
+	 * Restituisce una risponsta dell'esito.
+	 * 
+	 * @param inventario
+	 * @param file
+	 */
 	private void schermataRimuovi(Inventario inventario, File file) {
 
 		// creo un frame per contenere l'esecuzione iniziale del comando Rimuovi
