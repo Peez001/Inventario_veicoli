@@ -43,7 +43,7 @@ public class Inventario {
 			FileReader reader = new FileReader(file);
 			Scanner in = new Scanner(reader);
 			while (in.hasNextLine()) {
-				// System.out.println(in.nextLine());
+				//System.out.println(in.nextLine());
 				String targa = in.next();
 				String modello = in.next();
 				String marca = in.next();
@@ -61,19 +61,16 @@ public class Inventario {
 				} else
 					throw new IllegalArgumentException();
 			}
-			in.close();
 			reader.close();
+			in.close();
+			
 		} catch (FileNotFoundException e) {
-			System.out.println("File non esistente" + e);
+			System.out.println("File non esistente" + e.getMessage());
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} catch (IllegalArgumentException e) {
-			System.out.println("Why dont you funzioni");
+			System.out.println("IOException: " + e.getMessage());
 		} catch (Exception e) {
-			// System.out.println(e.getMessage());
-		}
-
-		finally {
+			System.out.println("Errore: " + e.getMessage());
+		} finally {
 			System.out.println("Inizializzazione Terminata...");
 		}
 	}
@@ -88,7 +85,7 @@ public class Inventario {
 	}
 
 	/**
-	 * metodo che stampa le proprietà del veicolo passato nel file
+	 * metodo che stampa le proprietï¿½ del veicolo passato nel file
 	 * 
 	 * @param v
 	 * @param file
@@ -97,17 +94,17 @@ public class Inventario {
 		try {
 			FileWriter writer = new FileWriter(file, true); // da controllare
 			PrintWriter out = new PrintWriter(writer);
+			out.print("\n"); 
 			if (v.getClass() == Moto.class) {
 				Moto m = (Moto) v;
-				out.println(
-						m.getTarga() + " " + m.getModello() + " " + m.getMarca() + " " + m.getCilindrata() + " Moto");
+				out.print( m.getTarga() + " " + m.getModello() + " " + m.getMarca() + " " + m.getCilindrata() + " Moto");
 			} else if (v.getClass() == Automobile.class) {
 				Automobile a = (Automobile) v;
-				out.println(a.getTarga() + " " + a.getModello() + " " + a.getMarca() + " " + a.getNumero_porte()
+				out.print(a.getTarga() + " " + a.getModello() + " " + a.getMarca() + " " + a.getNumero_porte()
 						+ " Automobile");
 			} else if (v.getClass() == Camion.class) {
 				Camion c = (Camion) v;
-				out.println(c.getTarga() + " " + c.getModello() + " " + c.getMarca() + " " + c.getPotata_carico()
+				out.print(c.getTarga() + " " + c.getModello() + " " + c.getMarca() + " " + c.getPotata_carico()
 						+ " Camion");
 			}
 			out.close();
@@ -120,7 +117,7 @@ public class Inventario {
 	 * metodo che rimuove il veicolo associato alla targa passata
 	 * 
 	 * @param targa
-	 * @return boolean che rappresenta se l'operazione è andata a buon fine
+	 * @return boolean che rappresenta se l'operazione ï¿½ andata a buon fine
 	 */
 	public boolean rimuoviVeicolo(String targa) {
 		for (Veicolo v : listaVeicoli) {
