@@ -432,7 +432,7 @@ public class GUIVeicoli extends JFrame{
 			
 				//se ho inserito un numero valido, allora aggiungo il veicolo
 				if(isNumero && numeroCorretto && targaValida) {
-					menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
+					//menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if(menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
 						 if (!testoNumeroPorte.getText().isEmpty()) { //controllo che serve per il parseInt
 							 Automobile auto = new Automobile(testoMarca.getText(), testoTarga.getText(), testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
