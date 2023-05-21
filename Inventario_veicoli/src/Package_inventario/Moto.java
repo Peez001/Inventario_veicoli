@@ -2,15 +2,17 @@ package Package_inventario;
 
 /**
  * Classe che rappresenta l'oggetto Moto
+ * 
  * @author ChurPeezZoli
  * @since 04/2023
  */
 public class Moto extends Veicolo {
 
 	private int cilindrata;
-	
+
 	/**
 	 * Costruttore della classe Moto
+	 * 
 	 * @param marca
 	 * @param targa
 	 * @param modello
@@ -23,6 +25,7 @@ public class Moto extends Veicolo {
 
 	/**
 	 * metodo che ritorna la cilindrata della moto
+	 * 
 	 * @return cilindrata
 	 */
 	public int getCilindrata() {
@@ -31,17 +34,18 @@ public class Moto extends Veicolo {
 
 	/**
 	 * metodo che permette di settare la cilindrata della moto
+	 * 
 	 * @param cilindrata
 	 */
 	public void setCilindrata(int cilindrata) {
 		this.cilindrata = cilindrata;
 	}
-	
+
 	/**
 	 * metodo che ritorna la stringa che esplicita le proprietà dell'oggetto Moto
 	 */
 	public String toString() {
 		return "Moto con cilindrata di " + this.cilindrata + " cc. " + super.toString();
 	}
-	
+
 }

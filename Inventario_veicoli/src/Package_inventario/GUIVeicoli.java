@@ -56,7 +56,7 @@ public class GUIVeicoli extends JFrame {
 
 	/**
 	 * Costruttore dell'interfaccia utente, richiama al suo interno dei metodi di
-	 * inizializzazione. E' implementata la sequenzialità grafica
+	 * inizializzazione. E' implementata la sequenzialitï¿½ grafica
 	 * 
 	 * @param inventario
 	 * @param file
@@ -153,7 +153,8 @@ public class GUIVeicoli extends JFrame {
 	}
 
 	/**
-	 * 
+	 * Metodo per schermata selezione azioni: trova veicolo, aggiungi veicolo,
+	 * stampa lista, rimuovi veicolo.
 	 */
 	private void schermataInventario() {
 
@@ -206,11 +207,12 @@ public class GUIVeicoli extends JFrame {
 	}
 
 	/**
+	 * Metodo per schermata inserimento dati e aggiunta veicolo. Controllo sul
+	 * riempimento di tutti i campi prima dell'abilitazione dell'aggiunta. Controllo
+	 * sulla correttezza dei dati specifici del veicolo (ma non della targa).
 	 * 
-	 * vezzo scrivi quella che c'è dentro
-	 * 
-	 * @param inventario
-	 * @param file
+	 * @param inventario dei veicoli
+	 * @param file       di testo
 	 */
 	private void schermataAddVeicolo(Inventario inventario, File file) {
 		// Creo il frame che conterrÃ  tutta la gestione di aggiunta veicolo
@@ -535,8 +537,8 @@ public class GUIVeicoli extends JFrame {
 	}
 
 	/**
-	 * Metodo che implementa la funzionalità grafica del metodo trovaVeicolo. prende
-	 * come parametro l'inventario, in modo tale da agire sui suoi veicoli
+	 * Metodo che implementa la funzionalitï¿½ grafica del metodo trovaVeicolo.
+	 * prende come parametro l'inventario, in modo tale da agire sui suoi veicoli
 	 * utilizzando i metodi offerti dalla sua classe.
 	 * 
 	 * @param inventario
@@ -730,6 +732,11 @@ public class GUIVeicoli extends JFrame {
 		});
 	}
 
+	/**
+	 * Metodo main
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Inventario inventario = new Inventario();
