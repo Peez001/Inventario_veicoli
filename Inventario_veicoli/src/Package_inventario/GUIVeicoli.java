@@ -55,6 +55,11 @@ public class GUIVeicoli extends JFrame{
 	Color coloreSfondo = new Color(105, 156, 180); //Imposto il colore dello sfondo	
 	Font font = new Font("Helvetica", Font.BOLD, 30);
 	
+	/**
+	 * Costruttore della classe GUIVeicoli
+	 * @param inventario dei veicoli
+	 * @param file di testo
+	 */
 	public GUIVeicoli(Inventario inventario, File file) {
 		
 		schermataIniziale();	
@@ -66,7 +71,9 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 	
-	//schermata all'avvio del programma
+	/**
+	 * Metodo per schermata all'avvio del programma. Immagine veicolo, etichetta e bottone.
+	 */
 	private void schermataIniziale() {
 				
 		CardLayout cardLayout = new CardLayout();
@@ -140,7 +147,9 @@ public class GUIVeicoli extends JFrame{
 		});
 	}
 
-	//schermata selezione azioni
+	/** 
+	 * Metodo per schermata selezione azioni: trova veicolo, aggiungi veicolo, stampa lista, rimuovi veicolo.
+	 */
 	private void schermataInventario() {
 		
 		pannelloInventario = new JPanel(){ //pannello inventario con colore gradiente
@@ -194,7 +203,12 @@ public class GUIVeicoli extends JFrame{
 		
 	}
 
-	//schermata inserimento dati e aggiunta veicolo
+	/**
+	 * Metodo per schermata inserimento dati e aggiunta veicolo. Controllo sul riempimento di tutti i campi prima dell'abilitazione dell'aggiunta.
+	 * Controllo sulla correttezza dei dati specifici del veicolo (ma non della targa).
+	 * @param inventario dei veicoli
+	 * @param file di testo
+	 */
 	private void schermataAddVeicolo(Inventario inventario, File file) {
 		//Creo il frame che conterrà tutta la gestione di aggiunta veicolo
 		JFrame frameAggiungiVeicolo = new JFrame("Aggiungi nuovo veicolo");
@@ -654,6 +668,10 @@ public class GUIVeicoli extends JFrame{
 		 });
 	}
 
+	/**
+	 * Metodo main 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		Inventario inventario = new Inventario();
