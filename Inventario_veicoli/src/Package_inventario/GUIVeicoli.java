@@ -468,8 +468,8 @@ public class GUIVeicoli extends JFrame {
 					// menuATendina.setSelectedIndex(menuATendina.getSelectedIndex());
 					if (menuATendina.getSelectedItem().toString().equals("AUTOMOBILE")) {
 						if (!testoNumeroPorte.getText().isEmpty()) { // controllo che serve per il parseInt
-							Automobile auto = new Automobile(testoMarca.getText(), testoTarga.getText(),
-									testoModello.getText(), Integer.parseInt(testoNumeroPorte.getText()));
+							Automobile auto = new Automobile(spaziToUnderscore(testoMarca.getText()), testoTarga.getText(),
+									spaziToUnderscore(testoModello.getText()), Integer.parseInt(testoNumeroPorte.getText()));
 							inventario.aggiungiVeicolo(auto);
 							inventario.aggiungiVeicoloFile(auto, file);
 							JOptionPane.showMessageDialog(null,
@@ -478,7 +478,7 @@ public class GUIVeicoli extends JFrame {
 						}
 					} else if (menuATendina.getSelectedItem().toString().equals("MOTO")) {
 						if (!testoCilindrata.getText().isEmpty()) {
-							Moto moto = new Moto(testoMarca.getText(), testoTarga.getText(), testoModello.getText(),
+							Moto moto = new Moto(spaziToUnderscore(testoMarca.getText()), testoTarga.getText(), spaziToUnderscore(testoModello.getText()),
 									Integer.parseInt(testoCilindrata.getText()));
 							inventario.aggiungiVeicolo(moto);
 							inventario.aggiungiVeicoloFile(moto, file);
@@ -488,8 +488,8 @@ public class GUIVeicoli extends JFrame {
 						}
 					} else {
 						if (!testoPortataMassima.getText().isEmpty()) {
-							Camion camion = new Camion(testoMarca.getText(), testoTarga.getText(),
-									testoModello.getText(), Integer.parseInt(testoPortataMassima.getText()));
+							Camion camion = new Camion(spaziToUnderscore(testoMarca.getText()), testoTarga.getText(),
+									spaziToUnderscore(testoModello.getText()), Integer.parseInt(testoPortataMassima.getText()));
 							inventario.aggiungiVeicolo(camion);
 							inventario.aggiungiVeicoloFile(camion, file);
 							JOptionPane.showMessageDialog(null,
@@ -732,6 +732,21 @@ public class GUIVeicoli extends JFrame {
 		});
 	}
 
+	/**
+	 * Metodo per consentire inserimenti con spazi (per non dare problemi in lettura del file)
+	 * @param stringaDaCambiare
+	 * @return
+	 */
+	private String spaziToUnderscore(String stringaDaCambiare) {
+		String nuovaStringa = "";
+		for(int i = 0; i < stringaDaCambiare.length(); i++) {
+			if(stringaDaCambiare.charAt(i) == ' ')
+				nuovaStringa += "_";
+			nuovaStringa += stringaDaCambiare.charAt(i);
+		}
+		return nuovaStringa;
+	}
+	
 	/**
 	 * Metodo main
 	 * 
