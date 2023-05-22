@@ -1,3 +1,2 @@
 INDEX VERSION 1.131+C:\Users\lukep\Desktop\UNI\Elementi di proggettazione SW\Elaborato\Inventario_veicoli\.metadata\.plugins\org.eclipse.jdt.core
-931866754.index
 3638472311.index

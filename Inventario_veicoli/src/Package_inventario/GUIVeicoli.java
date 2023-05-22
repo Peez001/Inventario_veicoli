@@ -769,7 +769,8 @@ public class GUIVeicoli extends JFrame {
 		for(int i = 0; i < stringaDaCambiare.length(); i++) {
 			if(stringaDaCambiare.charAt(i) == ' ')
 				nuovaStringa += "_";
-			nuovaStringa += stringaDaCambiare.charAt(i);
+			else
+				nuovaStringa += stringaDaCambiare.charAt(i);
 		}
 		return nuovaStringa;
 	}
