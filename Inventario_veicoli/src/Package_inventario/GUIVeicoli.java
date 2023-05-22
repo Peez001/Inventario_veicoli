@@ -31,6 +31,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+/**
+ * Classe che compone la parte grafica del programma
+ * 
+ * @author ChurPeezZoli
+ * @since 04/2023
+ */
 public class GUIVeicoli extends JFrame {
 
 	private static final String essere = "\u00E9";
@@ -52,7 +58,7 @@ public class GUIVeicoli extends JFrame {
 
 	ImageIcon logo = new ImageIcon("veicolo.png"); // Creo il logo. Il file Ã© all'interno del progetto
 	Color coloreSfondo = new Color(105, 156, 180); // Imposto il colore dello sfondo
-	Font font = new Font("Helvetica", Font.BOLD, 30);
+	Font font = new Font("Helvetica", Font.BOLD, 30); //Imposto il font dell'applicazione
 
 	/**
 	 * Costruttore dell'interfaccia utente, richiama al suo interno dei metodi di
@@ -89,7 +95,7 @@ public class GUIVeicoli extends JFrame {
 																		// l'applicazione
 		frameIniziale.setIconImage(logo.getImage()); // Imposto l'icona del frame
 
-		JLabel immagine = new JLabel();
+		JLabel immagine = new JLabel(); //Creo la label che contiene l'immagine
 		immagine.setIcon(logo);
 		immagine.setHorizontalAlignment(JLabel.CENTER);
 		immagine.setVerticalAlignment(JLabel.CENTER);
@@ -144,7 +150,7 @@ public class GUIVeicoli extends JFrame {
 		// sua volta Ã© nel frameIniziale.
 		pannelloCards.add(pannelloIniziale);
 
-		// LISTENERS
+		// Quando viene premuto il bottone di inizio passo alla prossima schermata del CardLayout
 		bottoneInizio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.next(pannelloCards);
@@ -173,34 +179,43 @@ public class GUIVeicoli extends JFrame {
 			}
 
 		};
+		
+		//definisco layout e bordi del pannello dell'inventario
 		pannelloInventario.setLayout(new GridLayout(4, 1, 0, 40));
 		pannelloInventario.setBorder(new EmptyBorder(80, 80, 80, 80));
-
+		
+		//bottone trova veicolo
+		//setto dimensione, font e not focusable per tutti
 		bottoneTrovaVeicolo = new JButton("TROVA VEICOLO");
 		bottoneTrovaVeicolo.setPreferredSize(new Dimension(200, 200));
 		bottoneTrovaVeicolo.setFont(font);
 		bottoneTrovaVeicolo.setFocusable(false);
 
+		//bottone aggiungi veicolo
 		bottoneAggiungiVeicolo = new JButton("AGGIUNGI NUOVO VEICOLO");
 		bottoneAggiungiVeicolo.setPreferredSize(new Dimension(200, 200));
 		bottoneAggiungiVeicolo.setFont(font);
 		bottoneAggiungiVeicolo.setFocusable(false);
-
+		
+		//bottone stampa veicolo
 		bottoneStampaVeicoli = new JButton("STAMPA VEICOLI");
 		bottoneStampaVeicoli.setPreferredSize(new Dimension(200, 200));
 		bottoneStampaVeicoli.setFont(font);
 		bottoneStampaVeicoli.setFocusable(false);
 
+		//bottone rimuovi veicolo
 		bottoneRimuoviVeicolo = new JButton("RIMUOVI VEICOLO");
 		bottoneRimuoviVeicolo.setPreferredSize(new Dimension(200, 200));
 		bottoneRimuoviVeicolo.setFont(font);
 		bottoneRimuoviVeicolo.setFocusable(false);
 
+		//aggiungo i bottoni al pannello
 		pannelloInventario.add(bottoneAggiungiVeicolo);
 		pannelloInventario.add(bottoneStampaVeicoli);
 		pannelloInventario.add(bottoneTrovaVeicolo);
 		pannelloInventario.add(bottoneRimuoviVeicolo);
-
+		
+		//aggiungo al pannelloCards
 		pannelloCards.add(pannelloInventario);
 		frameIniziale.add(pannelloCards);
 
@@ -451,8 +466,8 @@ public class GUIVeicoli extends JFrame {
 							numeroCorretto = false;
 						}
 					}
-				} catch (NumberFormatException ex) {
-					// oops
+				} catch (NumberFormatException ex) { //eccezione nel caso in cui il campo delle specifiche non sia riempito da un numero.
+					System.out.println("Formato numero non valido. " + ex.getMessage());
 				}
 
 				boolean targaValida = false;
@@ -598,7 +613,12 @@ public class GUIVeicoli extends JFrame {
 		});
 	}
 
-	// schermata di stampa dei veicoli
+	/**
+	 * Metodo che implementa la funzionalità del metodoStamp.
+	 * Nella schermata si può leggere la lista dei veicoli presenti nell'inventario.
+	 * 
+	 * @param inventario
+	 */
 	private void schermataStamp(Inventario inventario) {
 
 		// creo un frame per contenere l'esecuzione iniziale del comando Stamp
@@ -636,7 +656,14 @@ public class GUIVeicoli extends JFrame {
 		frameStamp.add(areaStampa);
 	}
 
-	// schermata di rimozione dei veicoli
+	/**
+	 * Metodo che implementa la funzionalità del metodo rimuoviVeicolo.
+	 * Nella schermata c'è la possibilità di rimuovere un veicolo data la targa.
+	 * Restituisce una risponsta dell'esito.
+	 * 
+	 * @param inventario
+	 * @param file
+	 */
 	private void schermataRimuovi(Inventario inventario, File file) {
 
 		// creo un frame per contenere l'esecuzione iniziale del comando Rimuovi
